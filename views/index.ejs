@@ -91,180 +91,255 @@
 </head>
 
 <body class="d-flex align-items-center py-4 bg-body-tertiary">
+  <!-- Modal -->
+  <div class="modal fade" id="checkNum_Adults" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5">Error</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          Please enter the number of adults.
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-primary" data-bs-dismiss="modal">OK</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade" id="checkNum_Children" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5">Error</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          Please enter the number of children.
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-primary" data-bs-dismiss="modal">OK</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade" id="checkTravel_Dates" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5">Error</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          Please enter the number of dates.
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-primary" data-bs-dismiss="modal">OK</button>
+        </div>
+      </div>
+    </div>
+  </div>
 
   <main class="form-signin w-100 m-auto">
-    <form>
+    <form method="post" action="/calc">
 
       <img class="mb-4" src="/images/calculator-fill.svg" alt="" width="72" height="57">
-      <h1 class="h3 mb-3 fw-normal">Please enter your quotation conditions.</h1>
+      <h1 class="h3 mb-3 fw-normal">Please enter your itinerary.</h1>
 
       <div class="form-floating">
-        <input type="TXT_START number" class="form-control" id="num_adults" placeholder="" maxlength="3"
+        <input type="TXT_START" class="form-control" name="num_adults" id="num_adults" placeholder="" maxlength="3"
           oninput="value = value.replace(/[^0-9]+/i,'');">
         <label for="num_adults">Number of adults</label>
       </div>
       <div class="form-floating">
-        <input type="TXT_MID" class="form-control" id="num_children" placeholder="" maxlength="3"
+        <input type="TXT_MID" class="form-control" name="num_children" id="num_children" placeholder="" maxlength="3"
           oninput="value = value.replace(/[^0-9]+/i,'');">
         <label for="num_children">Number of children</label>
       </div>
       <div class="form-floating">
-        <input type="TXT_END" class="form-control" id="trave_dates" placeholder="" maxlength="1"
+        <input type="TXT_END" class="form-control" name="travel_dates" id="travel_dates" placeholder="" maxlength="1"
           oninput="value = value.replace(/[^0-9]+/i,'');">
         <label for="trave_dates">Travel Dates</label>
       </div>
 
-      <button class="btn btn-primary w-100 py-2" id="show_details" type="button" onclick="myFunction()">Show
+      <button class="btn btn-primary w-100 py-2" id="more_details" type="button" onclick="funcMoreDetails()">More
         Details</button>
       <hr class="my-4">
       <br>
 
-      <div id="DIV_DAY1" style="display: none;">
-        <h1 class="h3 mb-3 fw-normal">Day 1</h1>
-        <div class="list-group">
-          <label class="list-group-item d-flex gap-2">
-            <input class="form-check-input flex-shrink-0" type="checkbox" value="">
-            <span>
-              Breakfast
-              <small class="d-block text-body-secondary">With breakfast</small>
-            </span>
-          </label>
-          <label class="list-group-item d-flex gap-2">
-            <input class="form-check-input flex-shrink-0" type="checkbox" value="">
-            <span>
-              Lunch
-              <small class="d-block text-body-secondary">With lunch</small>
-            </span>
-          </label>
-          <label class="list-group-item d-flex gap-2">
-            <input class="form-check-input flex-shrink-0" type="checkbox" value="">
-            <span>
-              Dinner
-              <small class="d-block text-body-secondary">With dinner</small>
-            </span>
-          </label>
-          <label class="list-group-item d-flex gap-2">
-            <input class="form-check-input flex-shrink-0" type="checkbox" value="">
-            <span>
-              Car Service
-              <small class="d-block text-body-secondary">With car service</small>
-            </span>
-          </label>
-          <label class="list-group-item d-flex gap-2">
-            <input class="form-check-input flex-shrink-0" type="checkbox" value="">
-            <span>
-              Guide Service
-              <small class="d-block text-body-secondary">With guide service</small>
-            </span>
-          </label>
+      <% for (var iDay=1; iDay <=10; iDay++) { %>
+        <div id="DIV_DAY<%= iDay %>" style="display: none;">
+          <h1 class="h3 mb-3 fw-normal">Day <%= iDay %>
+          </h1>
+          <div class="list-group">
+            <label class="list-group-item d-flex gap-2">
+              <input class="form-check-input flex-shrink-0" name="D<%= iDay %>_ck_guide" type="checkbox" value="Y">
+              <span>
+                Guide Service
+                <small class="d-block text-body-secondary">Include guide service</small>
+              </span>
+            </label>
+            <label class="list-group-item d-flex gap-2">
+              <input class="form-check-input flex-shrink-0" name="D<%= iDay %>_ck_lunch" type="checkbox" value="Y">
+              <span>
+                Lunch
+                <small class="d-block text-body-secondary">Include lunch</small>
+              </span>
+            </label>
+            <label class="list-group-item d-flex gap-2">
+              <input class="form-check-input flex-shrink-0" name="D<%= iDay %>_ck_dinner" type="checkbox" value="Y">
+              <span>
+                Dinner
+                <small class="d-block text-body-secondary">Include dinner</small>
+              </span>
+            </label>
+            <label class="list-group-item d-flex gap-2">
+              <input class="form-check-input flex-shrink-0" type="checkbox" name="D<%= iDay %>_ck_car" value="Y" checked>
+              <span>
+                Car Service(Charter or Shuttle)
+                <div class="btn-group" role="group" aria-label="Basic radio toggle button group" style="width: 100%;">
+                  <input type="radio" class="btn-check" name="D<%= iDay %>_br_car" id="D<%= iDay %>_br_car_10h" value="10h" autocomplete="off"
+                    checked>
+                  <label class="btn btn-outline-primary" for="D<%= iDay %>_br_car_10h">10H Charter</label>
+                  <input type="radio" class="btn-check" name="D<%= iDay %>_br_car" id="D<%= iDay %>_br_car_shuttle" value="shuttle"
+                    autocomplete="off">
+                  <label class="btn btn-outline-primary" for="D<%= iDay %>_br_car_shuttle">Shuttle</label>
+                </div>
+                <small class="d-block text-body-secondary">10 hours or shuttle</small>
+              </span>
+            </label>
+            <label class="list-group-item d-flex gap-2">
+              <input class="form-check-input flex-shrink-0" type="checkbox" name="D<%= iDay %>_ck_hotel" value="Y" checked>
+              <span>
+                Hotel
+                <div class="btn-group" role="group" aria-label="Basic radio toggle button group"
+                  style="width: 100%; padding-bottom: 10px;">
+                  <input type="radio" class="btn-check" name="D<%= iDay %>_br_area" id="D<%= iDay %>_br_area_other" value="other"
+                    autocomplete="off">
+                  <label class="btn btn-outline-primary" for="D<%= iDay %>_br_area_other">Tokyo Area</label>
+                  <input type="radio" class="btn-check" name="D<%= iDay %>_br_area" id="D<%= iDay %>_br_area_tokyo" value="tokyo"
+                    autocomplete="off" checked>
+                  <label class="btn btn-outline-primary" for="D<%= iDay %>_br_area_tokyo">Other Area</label>
+                </div>
+                <div class="btn-group" role="group" aria-label="Basic radio toggle button group" style="width: 100%;">
+                  <input type="radio" class="btn-check" name="D<%= iDay %>_br_hotel" id="D<%= iDay %>_br_hotel_lv3" value="lv3" autocomplete="off"
+                    checked>
+                  <label class="btn btn-outline-primary" for="D<%= iDay %>_br_hotel_lv3">3 Star</label>
+                  <input type="radio" class="btn-check" name="D<%= iDay %>_br_hotel" id="D<%= iDay %>_br_hotel_lv4" value="lv4"
+                    autocomplete="off">
+                  <label class="btn btn-outline-primary" for="D<%= iDay %>_br_hotel_lv4">4 Star</label>
+                  <input type="radio" class="btn-check" name="D<%= iDay %>_br_hotel" id="D<%= iDay %>_br_hotel_lv5" value="lv5"
+                    autocomplete="off">
+                  <label class="btn btn-outline-primary" for="D<%= iDay %>_br_hotel_lv5">5 Star</label>
+                </div>
+                <small class="d-block text-body-secondary">Hotel information</small>
+              </span>
+            </label>
+            <label class="list-group-item d-flex gap-2">
+              <input class="form-check-input flex-shrink-0" type="checkbox" name="D<%= iDay %>_ck_experient" value="Y">
+              <span>
+                Experiential Learning
+                <% for (var i=0; i < loop; i++) { %>
+                  <select class="form-select" name="D<%= iDay %>_dd_experient" id="inputGroupSelect01">
+                    <option value="" selected>Choose...</option>
+                    <option value="1">Sumo Wrestler</option>
+                    <option value="2">Tea Ceremony</option>
+                    <option value="3">Geisha Show</option>
+                    <option value="4">Kimono Experience With Expert Photographer</option>
+                    <option value="5">Sword Marking</option>
+                  </select>
+                  <% } %>
+                    <small class="d-block text-body-secondary">Culture experience</small>
+              </span>
+            </label>
+            <label class="list-group-item d-flex gap-2">
+              <input class="form-check-input flex-shrink-0" type="checkbox" name="D<%= iDay %>_ck_ticket" value="Y">
+              <span>
+                Ticket Service
+                <% for (var i=0; i < loop; i++) { %>
+                  <select class="form-select" name="D<%= iDay %>_dd_ticket" id="inputGroupSelect01">
+                    <option value="" selected>Choose...</option>
+                    <option value="1">USJ or Disney</option>
+                    <option value="2">Temple</option>
+                    <option value="3">Dummy Ticket3</option>
+                    <option value="4">Dummy Ticket4</option>
+                    <option value="5">Dummy Ticket5</option>
+                    <option value="6">Shinkansen(Tokyo - Oosaka)</option>
+                  </select>
+                  <% } %>
+                    <small class="d-block text-body-secondary">Ticket Service</small>
+              </span>
+            </label>
+            <label class="list-group-item d-flex gap-2">
+              <span style="width: 100%;">
+                <div class="form-floating">
+                  <input type="number" class="form-control" name="D<%= iDay %>_num_other" id="D<%= iDay %>_trave_dates" placeholder=""
+                    maxlength="10" value="0">
+                  <label for="D<%= iDay %>_trave_dates">Other Expenses...</label>
+                </div>
+                <small class="d-block text-body-secondary">Fee</small>
+              </span>
+            </label>
+          </div>
+          <hr class="my-4">
         </div>
-
-        <hr class="my-4">
-      </div>
-
-      <div id="DIV_DAY2" style="display: none;">
-        <h1 class="h3 mb-3 fw-normal">Day 2</h1>
-        <div class="list-group">
-          <label class="list-group-item d-flex gap-2">
-            <input class="form-check-input flex-shrink-0" type="checkbox" value="">
-            <span>
-              Breakfast
-              <small class="d-block text-body-secondary">With breakfast</small>
-            </span>
-          </label>
-          <label class="list-group-item d-flex gap-2">
-            <input class="form-check-input flex-shrink-0" type="checkbox" value="">
-            <span>
-              Lunch
-              <small class="d-block text-body-secondary">With lunch</small>
-            </span>
-          </label>
-          <label class="list-group-item d-flex gap-2">
-            <input class="form-check-input flex-shrink-0" type="checkbox" value="">
-            <span>
-              Dinner
-              <small class="d-block text-body-secondary">With dinner</small>
-            </span>
-          </label>
-          <label class="list-group-item d-flex gap-2">
-            <input class="form-check-input flex-shrink-0" type="checkbox" value="">
-            <span>
-              Car Service
-              <small class="d-block text-body-secondary">With car service</small>
-            </span>
-          </label>
-          <label class="list-group-item d-flex gap-2">
-            <input class="form-check-input flex-shrink-0" type="checkbox" value="">
-            <span>
-              Guide Service
-              <small class="d-block text-body-secondary">With guide service</small>
-            </span>
-          </label>
-        </div>
-
-        <hr class="my-4">
-      </div>
-
-      <div id="DIV_DAY3" style="display: none;">
-        <h1 class="h3 mb-3 fw-normal">Day 3</h1>
-        <div class="list-group">
-          <label class="list-group-item d-flex gap-2">
-            <input class="form-check-input flex-shrink-0" type="checkbox" value="">
-            <span>
-              Breakfast
-              <small class="d-block text-body-secondary">With breakfast</small>
-            </span>
-          </label>
-          <label class="list-group-item d-flex gap-2">
-            <input class="form-check-input flex-shrink-0" type="checkbox" value="">
-            <span>
-              Lunch
-              <small class="d-block text-body-secondary">With lunch</small>
-            </span>
-          </label>
-          <label class="list-group-item d-flex gap-2">
-            <input class="form-check-input flex-shrink-0" type="checkbox" value="">
-            <span>
-              Dinner
-              <small class="d-block text-body-secondary">With dinner</small>
-            </span>
-          </label>
-          <label class="list-group-item d-flex gap-2">
-            <input class="form-check-input flex-shrink-0" type="checkbox" value="">
-            <span>
-              Car Service
-              <small class="d-block text-body-secondary">With car service</small>
-            </span>
-          </label>
-          <label class="list-group-item d-flex gap-2">
-            <input class="form-check-input flex-shrink-0" type="checkbox" value="">
-            <span>
-              Guide Service
-              <small class="d-block text-body-secondary">With guide service</small>
-            </span>
-          </label>
-        </div>
-
-        <hr class="my-4">
-      </div>
+        <% } %>
 
 
 
+          <div id="DIV_SUBMIT" style="display: none;">
+            <button class="btn btn-primary w-100 py-2" type="submit">Submit</button>
+          </div>
 
-      <div id="DIV_SUBMIT" style="display: none;">
-        <button class="btn btn-primary w-100 py-2" type="submit">Submit</button>
-      </div>
 
-
-      <p class="mt-5 mb-3 text-body-secondary">&copy; 2023</p>
+          <p class="mt-5 mb-3 text-body-secondary">&copy; 2023</p>
     </form>
+
   </main>
   <script src="/javascripts/bootstrap.bundle.min.js"></script>
   <script src="/javascripts/jquery-3.7.1.min.js"></script>
   <script src="/javascripts/jquery-ui.min.js"></script>
   <script>
-    function myFunction() {
-      var x = document.getElementById("DIV_DAY1");
+    function funcMoreDetails() {
+
+      if (!document.getElementById("num_adults").value.match(/\S/)) {
+        const msgModel = new bootstrap.Modal('#checkNum_Adults', {
+          keyboard: false
+        });
+        msgModel.show();
+        return;
+      }
+
+      if (!document.getElementById("num_children").value.match(/\S/)) {
+        const msgModel = new bootstrap.Modal('#checkNum_Children', {
+          keyboard: false
+        });
+        msgModel.show();
+        return;
+      }
+
+      var tra_dates = document.getElementById("travel_dates").value;
+      if (!tra_dates.match(/\S/)) {
+        const msgModel = new bootstrap.Modal('#checkTravel_Dates', {
+          keyboard: false
+        });
+        msgModel.show();
+        return;
+      }
+
+      for (let i = 1; i <= 10; i++) {
+        var x = document.getElementById("DIV_DAY" + i);
+        if (i <= parseInt(tra_dates)) {
+          x.style.display = "block";
+        } else {
+          x.style.display = "none";
+        }
+      }
+
+      var x = document.getElementById("DIV_SUBMIT");
       if (x.style.display === "none") {
         x.style.display = "block";
       } else {
