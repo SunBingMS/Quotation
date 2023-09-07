@@ -5,9 +5,9 @@ const db = require("../db/sqlite.js");
 
 /* GET home page. */
 router.get('/', async function(req, res, next) {
-  const strName = await db.getName("1");
-  console.log(strName[0].name);
-  res.render('index', { loop: 3 });
+  const tbProject = await db.getProject("");
+  const tbTicket = await db.getTicket("");
+  res.render('index', {loop: 3, tbProject, tbTicket});
 });
 
 router.post('/Calc', (req, res) => {

@@ -31,10 +31,32 @@ module.exports = {
    * Return everything in the Choices table
    * Throw an error in case of db connection issues
    */
-  getName: async id => {
+  getProject: async id => {
     // We use a try catch block in case of db errors
     try {
-      return await db.all("SELECT name from personal where id = ?", id);
+      if (id) {
+        return await db.all("SELECT * from m_project where id = ?", id);
+      }
+      else
+      {
+        return await db.all("SELECT id, name from m_project");
+      }
+    } catch (dbError) {
+      // Database connection error
+      console.error(dbError);
+    }
+  },
+
+  getTicket: async id => {
+    // We use a try catch block in case of db errors
+    try {
+      if (id) {
+        return await db.all("SELECT * from m_ticket where id = ?", id);
+      }
+      else
+      {
+        return await db.all("SELECT id, name from m_ticket");
+      }
     } catch (dbError) {
       // Database connection error
       console.error(dbError);
