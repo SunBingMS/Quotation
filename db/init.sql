@@ -17,9 +17,9 @@ insert into m_car values('1', '18', '55000', '55000');
 insert into m_car values('1', '30', '90000', '90000');
 insert into m_car values('1', '45', '95000', '95000');
 
-create table m_guide(price_adult, price_child);
-DELETE FROM m_guide;
-insert into m_guide values('30000', '30000');
+-- create table m_guide(price_adult, price_child);
+-- DELETE FROM m_guide;
+-- insert into m_guide values('30000', '30000');
 
 create table m_food(price_adult, price_child);
 DELETE FROM m_food;
