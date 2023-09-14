@@ -11,15 +11,13 @@ router.get('/', async function(req, res, next) {
   res.render('index', {loop: 3, tbProject, tbTicket});
 });
 
-router.post('/Calc', (req, res) => {
+router.post('/result', async function(req, res) {
   // console.log(req.body);
-  const objResult = calc(req.body);
-  
+  const objResult = await calc(req.body);
 
-  
   console.log(objResult.total_amount);
-
-  res.send('Calc Result')
+  res.render('result');
+  // res.send('Calc Result')
 });
 
 module.exports = router;

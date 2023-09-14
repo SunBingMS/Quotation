@@ -19,27 +19,50 @@ dbWrapper
     db = dBase;
     try {
     } catch (dbError) {
-        console.error(dbError);
+      console.error(dbError);
     }
-});
+  });
 // Our server script will call these methods to connect to the db
 module.exports = {
-  
-  /**
-   * Get the options in the database
-   *
-   * Return everything in the Choices table
-   * Throw an error in case of db connection issues
-   */
+
+  getFood: async () => {
+    // We use a try catch block in case of db errors
+    try {
+      return await db.all("SELECT price_adult, price_child FROM m_food LIMIT 1");
+    } catch (dbError) {
+      // Database connection error
+      console.error(dbError);
+    }
+  },
+
+  getCar: async kind => {
+    // We use a try catch block in case of db errors
+    try {
+        return await db.all("SELECT * FROM m_car WHERE kind = ? ORDER BY CAST(upper_limit AS INTEGER) ASC", kind);
+    } catch (dbError) {
+      // Database connection error
+      console.error(dbError);
+    }
+  },
+
+  getHotel: async level => {
+    // We use a try catch block in case of db errors
+    try {
+        return await db.all("SELECT price_adult, price_child FROM m_hotel WHERE level = ?", level);
+    } catch (dbError) {
+      // Database connection error
+      console.error(dbError);
+    }
+  },
+
   getProject: async id => {
     // We use a try catch block in case of db errors
     try {
       if (id) {
-        return await db.all("SELECT * from m_project where id = ?", id);
+        return await db.all("SELECT price_adult, price_child FROM m_project WHERE id = ?", id);
       }
-      else
-      {
-        return await db.all("SELECT id, name from m_project");
+      else {
+        return await db.all("SELECT id, name FROM m_project");
       }
     } catch (dbError) {
       // Database connection error
@@ -51,10 +74,9 @@ module.exports = {
     // We use a try catch block in case of db errors
     try {
       if (id) {
-        return await db.all("SELECT * from m_ticket where id = ?", id);
+        return await db.all("SELECT price_adult, price_child from m_ticket where id = ?", id);
       }
-      else
-      {
+      else {
         return await db.all("SELECT id, name from m_ticket");
       }
     } catch (dbError) {

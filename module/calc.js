@@ -1,9 +1,44 @@
+const db = require("../db/sqlite.js");
 
+async function calcFare(num_people, br_car) {
+    var kind = "0";
+    var fare = 0.0;
+    if (br_car == "10h") {
+        kind = "0";
+    } else {
+        kind = "1";
+    }
+    var tbCar = await db.getCar(kind);
+    while (parseInt(num_people) > 0) {
+        for (let i = 0; i < tbCar.length; i++) {
+            if (parseInt(tbCar[i].upper_limit) >= parseInt(num_people)) {
+                fare += parseFloat(tbCar[i].price);
+                num_people -= parseInt(tbCar[i].upper_limit);
+                break;
+            }
+        }
+    }
 
-module.exports = function handleRequestBody(reqBody) {
+    console.log("Car:" + fare);
+    return (fare);
+}
+
+module.exports = async function calc(reqBody) {
 
     let total_sum = 0.0;
     let total_day = 0.0;
+
+    //订餐单价
+    var tbFood = await db.getFood();
+    //酒店单价
+    var tbHotel;
+    //酒店单价
+    var tbHotel;
+    //体验项目单价
+    var tbProject;
+    //订票单价
+    var tbTicket;
+
 
     var objReq = {
         num_adults: parseInt(reqBody.num_adults),
@@ -146,60 +181,76 @@ module.exports = function handleRequestBody(reqBody) {
     for (let i = 0; i < objReq.travel_dates; i++) {
         total_day = 0.0;
 
-        //Guide
+        //导游服务
         if (objReq.days[i].ck_guide == "Y") {
             total_day += 30000;
         }
 
-        //Lunch
+        //订餐服务Lunch
         if (objReq.days[i].ck_lunch == "Y") {
-            total_day += 3000 * objReq.num_adults + 3000 * objReq.num_children;
+            total_day += parseFloat(tbFood[0].price_adult) * objReq.num_adults
+                + parseFloat(tbFood[0].price_child) * objReq.num_children;
         }
 
-        //Dinner
+        //订餐服务Dinner
         if (objReq.days[i].ck_dinner == "Y") {
-            total_day += 3000 * objReq.num_adults + 3000 * objReq.num_children;
+            total_day += parseFloat(tbFood[0].price_adult) * objReq.num_adults
+                + parseFloat(tbFood[0].price_adult) * objReq.num_children;
         }
 
-        //Car
+        //包车费用
         if (objReq.days[i].ck_car == "Y") {
-            // total += calcFare(objReq.num_adults + objReq.num_children, objReq.days[i].br_car);
-            total_day += 3000 * objReq.num_adults + 3000 * objReq.num_children;
+            total_day += await calcFare(objReq.num_adults + objReq.num_children, objReq.days[i].br_car);
         }
 
-        //Hotel
+        //酒店费用
         if (objReq.days[i].ck_hotel == "Y") {
-            total_day += 12000 * objReq.num_adults + 12000 * objReq.num_children;
+            tbHotel = await db.getHotel(objReq.days[i].br_hotel);
+            total_day += parseFloat(tbHotel[0].price_adult) * objReq.num_adults
+                + parseFloat(tbHotel[0].price_adult) * objReq.num_children;
         }
 
-        //Experient
+        //体验项目
         for (let j = 0; j < 3; j++) {
             if (objReq.days[i].dd_experient[j] != "") {
-                total_day += 12000 * objReq.num_adults + 12000 * objReq.num_children;
+                tbProject = await db.getProject(objReq.days[i].dd_experient[j]);
+                total_day += parseFloat(tbProject[0].price_adult) * objReq.num_adults
+                    + parseFloat(tbProject[0].price_adult) * objReq.num_children;
             }
         }
 
-        //Ticket
+        //订票服务 实际票价+实际票价10%
         for (let j = 0; j < 3; j++) {
             if (objReq.days[i].dd_ticket[j] != "") {
-                total_day += 12000 * 1.1 * objReq.num_adults + 12000 * 1.1 * objReq.num_children;
+                tbTicket = await db.getTicket(objReq.days[i].dd_ticket[j]);
+                total_day += parseFloat(tbTicket[0].price_adult) * 1.1 * objReq.num_adults
+                    + parseFloat(tbTicket[0].price_adult) * 1.1 * objReq.num_children;
             }
         }
 
-        //Other
+        //超时服务、行程延长、或自由日添加项目
         if (objReq.days[i].num_other != "") {
-            total_day += objReq.days[i].num_other;
+            total_day += parseFloat(objReq.days[i].num_other);
         }
 
-        //Tokyo
+        //东京地区当天总价上浮10%
         if (objReq.days[i].br_area = "tokyo") {
             total_day = total_day * 1.1;
         }
 
+        //每天金额累计
         total_sum += total_day;
     }
 
+    //公司运营成本15% + 基础信息技术服务费用 + 基础设备添置
+    total_sum = total_sum * 1.15 + 20000 + 10000;
+
+    //服务小费
+    total_sum += 2000 * objReq.num_adults + 2000 * objReq.num_children;
+
+    //报价结果
     var objResult = {
+        
         total_amount: total_sum
     };
 
