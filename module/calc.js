@@ -227,7 +227,7 @@ module.exports = async function calc(reqBody) {
         if (objReq.days[i].ck_lunch == "Y") {
             total_day += parseFloat(tbFood[0].price_adult) * objReq.num_adults
                 + parseFloat(tbFood[0].price_child) * objReq.num_children;
-            objResult.lunch_qty += intTotal_people;
+            objResult.lunch_qty += 1;
         }
 
         //订餐服务Dinner
