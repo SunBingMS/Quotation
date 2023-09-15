@@ -101,62 +101,67 @@
         <tr>
           <th scope="col">Discription</th>
           <th scope="col">Qty</th>
-          <th scope="col">Price</th>
         </tr>
       </thead>
       <tbody class="table-group-divider">
         <tr>
           <td>Guide Service</td>
-          <td>1</td>
-          <td>123,456</td>
+          <td><%= objResult.guide_qty %></td>
         </tr>
         <tr>
           <td>Lunch Order</td>
-          <td>1</td>
-          <td>123,456</td>
+          <td><%= objResult.lunch_qty %></td>
+        </tr>
+        <tr>
+          <td>Dinner Order</td>
+          <td><%= objResult.dinner_qty %></td>
         </tr>
         <tr>
           <td>Car Service</td>
-          <td>1</td>
-          <td>123,456</td>
+          <td><%= objResult.car_qty %></td>
         </tr>
         <tr>
           <td>Hotel</td>
-          <td>1</td>
-          <td>123,456</td>
+          <td><%= objResult.hotel_qty %></td>
         </tr>
+        <% if (objResult.experient_qty.length > 0) {%>
         <tr>
-          <td>Experiential</td>
-          <td>1</td>
-          <td>123,456</td>
+          <td>Experiential:</td>
+          <td></td>
         </tr>
+        <% } %>
+        <% objResult.experient_qty.forEach((item)=> { %>
+          <tr>
+            <td><%= item.name %></td>
+            <td><%= item.qty %></td>
+          </tr>
+        <% }); %>
+        <% if (objResult.ticket_qty.length > 0) {%>
         <tr>
-          <td>Ticket</td>
-          <td>1</td>
-          <td>123,456</td>
+          <td>Ticket:</td>
+          <td></td>
         </tr>
-        <tr>
-          <td>Additional Cost</td>
-          <td>-</td>
-          <td>123,456</td>
-        </tr>
+        <% } %>
+        <% objResult.ticket_qty.forEach((item)=> { %>
+          <tr>
+            <td><%= item.name %></td>
+            <td><%= item.qty %></td>
+          </tr>
+        <% }); %>
         <tr>
           <td>Tip</td>
-          <td>1</td>
-          <td>123,456</td>
-        </tr>
-        <tr>
-          <td>Service Charge</td>
-          <td>1</td>
-          <td>123,456</td>
+          <td><%= objResult.tip_qty %></td>
         </tr>
       </tbody>
     </table>
 
     <br>
     <div align="right">
-      <p>Amount: <span style="font-size: 24px;">AAAAAAAA</span></p>
+      <p>Amount: <span style="font-size: 24px;">&yen;<%= objResult.total_amount.toLocaleString("ja-JP") %></span></p>
     </div>
+
+    <br>
+    <a href="/">Back</a>
 
   </main>
   <script src="/javascripts/bootstrap.bundle.min.js"></script>

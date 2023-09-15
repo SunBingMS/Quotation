@@ -25,7 +25,19 @@ async function calcFare(num_people, br_car) {
 
 module.exports = async function calc(reqBody) {
 
-    let total_sum = 0.0;
+    //报价结果
+    var objResult = {
+        guide_qty: 0,
+        lunch_qty: 0,
+        dinner_qty: 0,
+        car_qty: 0,
+        hotel_qty: 0,
+        experient_qty: [],
+        ticket_qty: [],
+        tip_qty: 0,
+        total_amount: 0.0
+    };
+
     let total_day = 0.0;
 
     //订餐单价
@@ -38,7 +50,6 @@ module.exports = async function calc(reqBody) {
     var tbProject;
     //订票单价
     var tbTicket;
-
 
     var objReq = {
         num_adults: parseInt(reqBody.num_adults),
@@ -178,29 +189,35 @@ module.exports = async function calc(reqBody) {
         ]
     };
 
+    var intTotal_people = parseInt(objReq.num_adults) + parseInt(objReq.num_children);
+
     for (let i = 0; i < objReq.travel_dates; i++) {
         total_day = 0.0;
 
         //导游服务
         if (objReq.days[i].ck_guide == "Y") {
             total_day += 30000;
+            objResult.guide_qty += intTotal_people;
         }
 
         //订餐服务Lunch
         if (objReq.days[i].ck_lunch == "Y") {
             total_day += parseFloat(tbFood[0].price_adult) * objReq.num_adults
                 + parseFloat(tbFood[0].price_child) * objReq.num_children;
+            objResult.lunch_qty += intTotal_people;
         }
 
         //订餐服务Dinner
         if (objReq.days[i].ck_dinner == "Y") {
             total_day += parseFloat(tbFood[0].price_adult) * objReq.num_adults
                 + parseFloat(tbFood[0].price_adult) * objReq.num_children;
+            objResult.dinner_qty += intTotal_people;
         }
 
         //包车费用
         if (objReq.days[i].ck_car == "Y") {
-            total_day += await calcFare(objReq.num_adults + objReq.num_children, objReq.days[i].br_car);
+            total_day += await calcFare(intTotal_people, objReq.days[i].br_car);
+            objResult.car_qty += 1;
         }
 
         //酒店费用
@@ -208,6 +225,7 @@ module.exports = async function calc(reqBody) {
             tbHotel = await db.getHotel(objReq.days[i].br_hotel);
             total_day += parseFloat(tbHotel[0].price_adult) * objReq.num_adults
                 + parseFloat(tbHotel[0].price_adult) * objReq.num_children;
+            objResult.hotel_qty += intTotal_people;
         }
 
         //体验项目
@@ -216,6 +234,7 @@ module.exports = async function calc(reqBody) {
                 tbProject = await db.getProject(objReq.days[i].dd_experient[j]);
                 total_day += parseFloat(tbProject[0].price_adult) * objReq.num_adults
                     + parseFloat(tbProject[0].price_adult) * objReq.num_children;
+                objResult.experient_qty.push({name: tbProject[0].name, qty: intTotal_people});
             }
         }
 
@@ -225,6 +244,7 @@ module.exports = async function calc(reqBody) {
                 tbTicket = await db.getTicket(objReq.days[i].dd_ticket[j]);
                 total_day += parseFloat(tbTicket[0].price_adult) * 1.1 * objReq.num_adults
                     + parseFloat(tbTicket[0].price_adult) * 1.1 * objReq.num_children;
+                objResult.ticket_qty.push({name: tbTicket[0].name, qty: intTotal_people});
             }
         }
 
@@ -234,25 +254,22 @@ module.exports = async function calc(reqBody) {
         }
 
         //东京地区当天总价上浮10%
-        if (objReq.days[i].br_area = "tokyo") {
+        if (objReq.days[i].br_area == "tokyo") {
             total_day = total_day * 1.1;
         }
 
+        console.log("Day" + (i + 1) + ": " + Math.round(total_day));
+        console.log(objReq.days[i].br_area);
         //每天金额累计
-        total_sum += total_day;
+        objResult.total_amount += Math.round(total_day);
     }
 
-    //公司运营成本15% + 基础信息技术服务费用 + 基础设备添置
-    total_sum = total_sum * 1.15 + 20000 + 10000;
-
     //服务小费
-    total_sum += 2000 * objReq.num_adults + 2000 * objReq.num_children;
+    objResult.total_amount += 2000 * objReq.num_adults + 2000 * objReq.num_children;
+    objResult.tip_qty = parseInt(objReq.num_adults) + parseInt(objReq.num_children);
 
-    //报价结果
-    var objResult = {
-        
-        total_amount: total_sum
-    };
+    //公司运营成本15% + 基础信息技术服务费用 + 基础设备添置
+    objResult.total_amount = Math.round(objResult.total_amount * 1.15 + 20000 + 10000);
 
     return (objResult);
 };
