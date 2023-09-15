@@ -12,9 +12,8 @@ router.get('/', async function(req, res, next) {
 });
 
 router.post('/result', async function(req, res) {
-  // console.log(req.body);
   const objResult = await calc(req.body);
-
+  
   console.log(objResult.total_amount);
   res.render('result', {objResult});
   // res.send('Calc Result')
