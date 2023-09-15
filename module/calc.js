@@ -38,6 +38,9 @@ module.exports = async function calc(reqBody) {
         total_amount: 0.0
     };
 
+    //勾选项目种类个数检查
+    var intCheckBoxCount = 0;
+
     let total_day = 0.0;
 
     //订餐单价
@@ -65,7 +68,9 @@ module.exports = async function calc(reqBody) {
                 ck_hotel: reqBody.D1_ck_hotel,
                 br_area: reqBody.D1_br_area,
                 br_hotel: reqBody.D1_br_hotel,
+                ck_experient: reqBody.D1_ck_experient,
                 dd_experient: reqBody.D1_dd_experient,
+                ck_ticket: reqBody.D1_ck_ticket,
                 dd_ticket: reqBody.D1_dd_ticket,
                 num_other: parseFloat(reqBody.D1_num_other)
             },
@@ -78,7 +83,9 @@ module.exports = async function calc(reqBody) {
                 ck_hotel: reqBody.D2_ck_hotel,
                 br_area: reqBody.D2_br_area,
                 br_hotel: reqBody.D2_br_hotel,
+                ck_experient: reqBody.D2_ck_experient,
                 dd_experient: reqBody.D2_dd_experient,
+                ck_ticket: reqBody.D2_ck_ticket,
                 dd_ticket: reqBody.D2_dd_ticket,
                 num_other: parseFloat(reqBody.D2_num_other)
             },
@@ -91,7 +98,9 @@ module.exports = async function calc(reqBody) {
                 ck_hotel: reqBody.D3_ck_hotel,
                 br_area: reqBody.D3_br_area,
                 br_hotel: reqBody.D3_br_hotel,
+                ck_experient: reqBody.D3_ck_experient,
                 dd_experient: reqBody.D3_dd_experient,
+                ck_ticket: reqBody.D3_ck_ticket,
                 dd_ticket: reqBody.D3_dd_ticket,
                 num_other: parseFloat(reqBody.D3_num_other)
             },
@@ -104,7 +113,9 @@ module.exports = async function calc(reqBody) {
                 ck_hotel: reqBody.D4_ck_hotel,
                 br_area: reqBody.D4_br_area,
                 br_hotel: reqBody.D4_br_hotel,
+                ck_experient: reqBody.D4_ck_experient,
                 dd_experient: reqBody.D4_dd_experient,
+                ck_ticket: reqBody.D4_ck_ticket,
                 dd_ticket: reqBody.D4_dd_ticket,
                 num_other: parseFloat(reqBody.D4_num_other)
             },
@@ -117,7 +128,9 @@ module.exports = async function calc(reqBody) {
                 ck_hotel: reqBody.D5_ck_hotel,
                 br_area: reqBody.D5_br_area,
                 br_hotel: reqBody.D5_br_hotel,
+                ck_experient: reqBody.D5_ck_experient,
                 dd_experient: reqBody.D5_dd_experient,
+                ck_ticket: reqBody.D5_ck_ticket,
                 dd_ticket: reqBody.D5_dd_ticket,
                 num_other: parseFloat(reqBody.D5_num_other)
             },
@@ -130,7 +143,9 @@ module.exports = async function calc(reqBody) {
                 ck_hotel: reqBody.D6_ck_hotel,
                 br_area: reqBody.D6_br_area,
                 br_hotel: reqBody.D6_br_hotel,
+                ck_experient: reqBody.D6_ck_experient,
                 dd_experient: reqBody.D6_dd_experient,
+                ck_ticket: reqBody.D6_ck_ticket,
                 dd_ticket: reqBody.D6_dd_ticket,
                 num_other: parseFloat(reqBody.D6_num_other)
             },
@@ -143,7 +158,9 @@ module.exports = async function calc(reqBody) {
                 ck_hotel: reqBody.D7_ck_hotel,
                 br_area: reqBody.D7_br_area,
                 br_hotel: reqBody.D7_br_hotel,
+                ck_experient: reqBody.D7_ck_experient,
                 dd_experient: reqBody.D7_dd_experient,
+                ck_ticket: reqBody.D7_ck_ticket,
                 dd_ticket: reqBody.D7_dd_ticket,
                 num_other: parseFloat(reqBody.D7_num_other)
             },
@@ -156,7 +173,9 @@ module.exports = async function calc(reqBody) {
                 ck_hotel: reqBody.D8_ck_hotel,
                 br_area: reqBody.D8_br_area,
                 br_hotel: reqBody.D8_br_hotel,
+                ck_experient: reqBody.D8_ck_experient,
                 dd_experient: reqBody.D8_dd_experient,
+                ck_ticket: reqBody.D8_ck_ticket,
                 dd_ticket: reqBody.D8_dd_ticket,
                 num_other: parseFloat(reqBody.D8_num_other)
             },
@@ -169,7 +188,9 @@ module.exports = async function calc(reqBody) {
                 ck_hotel: reqBody.D9_ck_hotel,
                 br_area: reqBody.D9_br_area,
                 br_hotel: reqBody.D9_br_hotel,
+                ck_experient: reqBody.D9_ck_experient,
                 dd_experient: reqBody.D9_dd_experient,
+                ck_ticket: reqBody.D9_ck_ticket,
                 dd_ticket: reqBody.D9_dd_ticket,
                 num_other: parseFloat(reqBody.D9_num_other)
             },
@@ -182,7 +203,9 @@ module.exports = async function calc(reqBody) {
                 ck_hotel: reqBody.D10_ck_hotel,
                 br_area: reqBody.D10_br_area,
                 br_hotel: reqBody.D10_br_hotel,
+                ck_experient: reqBody.D10_ck_experient,
                 dd_experient: reqBody.D10_dd_experient,
+                ck_ticket: reqBody.D10_ck_ticket,
                 dd_ticket: reqBody.D10_dd_ticket,
                 num_other: parseFloat(reqBody.D10_num_other)
             },
@@ -229,22 +252,26 @@ module.exports = async function calc(reqBody) {
         }
 
         //体验项目
-        for (let j = 0; j < 3; j++) {
-            if (objReq.days[i].dd_experient[j] != "") {
-                tbProject = await db.getProject(objReq.days[i].dd_experient[j]);
-                total_day += parseFloat(tbProject[0].price_adult) * objReq.num_adults
-                    + parseFloat(tbProject[0].price_adult) * objReq.num_children;
-                objResult.experient_qty.push({name: tbProject[0].name, qty: intTotal_people});
+        if (objReq.days[i].ck_experient == "Y") {
+            for (let j = 0; j < 3; j++) {
+                if (objReq.days[i].dd_experient[j] != "") {
+                    tbProject = await db.getProject(objReq.days[i].dd_experient[j]);
+                    total_day += parseFloat(tbProject[0].price_adult) * objReq.num_adults
+                        + parseFloat(tbProject[0].price_adult) * objReq.num_children;
+                    objResult.experient_qty.push({ name: tbProject[0].name, qty: intTotal_people });
+                }
             }
         }
 
         //订票服务 实际票价+实际票价10%
-        for (let j = 0; j < 3; j++) {
-            if (objReq.days[i].dd_ticket[j] != "") {
-                tbTicket = await db.getTicket(objReq.days[i].dd_ticket[j]);
-                total_day += parseFloat(tbTicket[0].price_adult) * 1.1 * objReq.num_adults
-                    + parseFloat(tbTicket[0].price_adult) * 1.1 * objReq.num_children;
-                objResult.ticket_qty.push({name: tbTicket[0].name, qty: intTotal_people});
+        if (objReq.days[i].ck_ticket == "Y") {
+            for (let j = 0; j < 3; j++) {
+                if (objReq.days[i].dd_ticket[j] != "") {
+                    tbTicket = await db.getTicket(objReq.days[i].dd_ticket[j]);
+                    total_day += parseFloat(tbTicket[0].price_adult) * 1.1 * objReq.num_adults
+                        + parseFloat(tbTicket[0].price_adult) * 1.1 * objReq.num_children;
+                    objResult.ticket_qty.push({ name: tbTicket[0].name, qty: intTotal_people });
+                }
             }
         }
 
@@ -270,6 +297,16 @@ module.exports = async function calc(reqBody) {
 
     //公司运营成本15% + 基础信息技术服务费用 + 基础设备添置
     objResult.total_amount = Math.round(objResult.total_amount * 1.15 + 20000 + 10000);
+
+    //勾选项目种类低于3的话，不提供报价
+    if (objResult.guide_qty > 0) intCheckBoxCount += 1;
+    if (objResult.lunch_qty > 0) intCheckBoxCount += 1;
+    if (objResult.dinner_qty > 0) intCheckBoxCount += 1;
+    if (objResult.car_qty > 0) intCheckBoxCount += 1;
+    if (objResult.hotel_qty > 0) intCheckBoxCount += 1;
+    if (objResult.experient_qty.length > 0) intCheckBoxCount += 1;
+    if (objResult.ticket_qty.length > 0) intCheckBoxCount += 1;
+    if (intCheckBoxCount < 3) objResult.total_amount = 0;
 
     return (objResult);
 };

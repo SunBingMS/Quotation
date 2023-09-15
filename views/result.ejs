@@ -157,11 +157,18 @@
 
     <br>
     <div align="right">
-      <p>Amount: <span style="font-size: 24px;">&yen;<%= objResult.total_amount.toLocaleString("ja-JP") %></span></p>
+      <% if (objResult.total_amount == 0) {%>
+        <p>Amount: <span style="font-size: 24px;">&yen;******</span></p>
+      <% } else {%>
+        <p>Amount: <span style="font-size: 24px;">&yen;<%= objResult.total_amount.toLocaleString("ja-JP") %></span></p>
+      <% } %>
     </div>
+    <% if (objResult.total_amount == 0) {%>
+      <p><span style="color: red;">The number of selected service items is below the minimum requirement.</span></p>
+    <% } %>
 
     <br>
-    <a href="/">Back</a>
+    <button class="btn btn-primary w-100 py-2" type="button" onclick="location.href='/'">Back</button>
 
   </main>
   <script src="/javascripts/bootstrap.bundle.min.js"></script>
