@@ -88,7 +88,8 @@ module.exports = {
   insertLog: async (ip, num_adults, num_children, travel_dates, amount) => {
     try {
         await db.run("INSERT INTO t_log (time, ip, num_adults, num_children, travel_dates, amount) VALUES (?, ?, ?, ?, ?, ?)", [
-          new Date().toISOString(),
+          //new Date().toISOString(),
+          new Date().toLocaleString({ timeZone: 'Asia/Tokyo' }),
           ip,
           num_adults,
           num_children,
