@@ -40,3 +40,4 @@ insert into m_ticket values('2', 'Temple', '500', '500');
 insert into m_ticket values('3', 'Shinkansen', '16000', '16000');
 
 create table t_log(time, ip, num_adults, num_children, travel_dates, amount);
+create table m_user(account, password);

@@ -74,11 +74,21 @@ module.exports = {
     // We use a try catch block in case of db errors
     try {
       if (id) {
-        return await db.all("SELECT name, price_adult, price_child from m_ticket where id = ?", id);
+        return await db.all("SELECT name, price_adult, price_child FROM m_ticket WHERE id = ?", id);
       }
       else {
-        return await db.all("SELECT id, name from m_ticket");
+        return await db.all("SELECT id, name FROM m_ticket");
       }
+    } catch (dbError) {
+      // Database connection error
+      console.error(dbError);
+    }
+  },
+
+  getUser: async (account, password) => {
+    // We use a try catch block in case of db errors
+    try {
+      return await db.all("SELECT account, password FROM m_user WHERE account = ? AND password = ?", account, password);
     } catch (dbError) {
       // Database connection error
       console.error(dbError);

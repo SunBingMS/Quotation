@@ -4,8 +4,7 @@ var router = express.Router();
 const db = require("../db/sqlite.js");
 const calc = require("../module/calc.js");
 
-/* GET home page. */
-router.get('/', async function(req, res, next) {
+router.get('/index', isAuthenticated, async function(req, res, next) {
   const tbProject = await db.getProject("");
   const tbTicket = await db.getTicket("");
   res.render('index', {loop: 3, tbProject, tbTicket});
@@ -16,9 +15,9 @@ router.get('/log', async function(req, res, next) {
   res.render('log', {tbLog});
 });
 
-router.post('/result', async function(req, res) {
+router.post('/result', isAuthenticated, async function(req, res) {
   const objResult = await calc(req.body);
-  
+
   console.log(objResult.total_amount);
 
   //Log
@@ -29,5 +28,10 @@ router.post('/result', async function(req, res) {
   res.render('result', {objResult});
   // res.send('Calc Result')
 });
+
+function isAuthenticated (req, res, next) {
+  if (req.session.user) next()
+  else res.redirect('/')
+};
 
 module.exports = router;
