@@ -22,7 +22,7 @@ router.post('/result', async function(req, res) {
   console.log(objResult.total_amount);
 
   //Log
-  var strIP = req.ip;
+  var strIP = (req.headers['x-forwarded-for'] || req.connection.remoteAddress || '').split(',')[0].trim();
   if (strIP.includes("::ffff:")) strIP = strIP.replace('::ffff:', '');
   await db.insertLog(strIP, req.body.num_adults, req.body.num_children, req.body.travel_dates, objResult.total_amount);
 
