@@ -85,6 +85,31 @@ module.exports = {
     }
   },
 
+  insertLog: async (ip, num_adults, num_children, travel_dates, amount) => {
+    try {
+        await db.run("INSERT INTO t_log (time, ip, num_adults, num_children, travel_dates, amount) VALUES (?, ?, ?, ?, ?, ?)", [
+          new Date().toISOString(),
+          ip,
+          num_adults,
+          num_children,
+          travel_dates,
+          amount
+        ]);
+    } catch (dbError) {
+      console.error(dbError);
+    }
+  },
+
+  getLogs: async () => {
+    // Return most recent 20
+    try {
+      // Return the array of log entries to admin page
+      return await db.all("SELECT time, ip, amount FROM t_log ORDER BY time DESC LIMIT 20");
+    } catch (dbError) {
+      console.error(dbError);
+    }
+  },
+
   /**
    * Process a user vote
    *
@@ -117,21 +142,6 @@ module.exports = {
 
       // Return the choices so far - page will build these into a chart
       return await db.all("SELECT * from Choices");
-    } catch (dbError) {
-      console.error(dbError);
-    }
-  },
-
-  /**
-   * Get logs
-   *
-   * Return choice and time fields from all records in the Log table
-   */
-  getLogs: async () => {
-    // Return most recent 20
-    try {
-      // Return the array of log entries to admin page
-      return await db.all("SELECT * from Log ORDER BY time DESC LIMIT 20");
     } catch (dbError) {
       console.error(dbError);
     }
