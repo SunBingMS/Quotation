@@ -4,11 +4,13 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="description" content="" />
-    <title>Quotation</title>
+    <title>Quotation - Calculator</title>
 
     <link href="/stylesheets/bootstrap.min.css" rel="stylesheet" />
     <link href="/stylesheets/jquery-ui.min.css" rel="stylesheet" />
     <link href="/stylesheets/index.css" rel="stylesheet" />
+    <link rel="icon" href="/images/favicon.ico">
+    <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-180x180.png">
 
     <style>
       .bd-placeholder-img {
@@ -99,7 +101,8 @@
     <script>
       function funcMoreDetails() {
         if (!document.getElementById("num_adults").value.match(/\S/)) {
-          const msgModel = new bootstrap.Modal("#checkNum_Adults", {
+          document.getElementById("errmsg").innerHTML = "Please enter the number of adults.";
+          const msgModel = new bootstrap.Modal("#checkInput", {
             keyboard: false,
           });
           msgModel.show();
@@ -107,7 +110,8 @@
         }
 
         if (!document.getElementById("num_children").value.match(/\S/)) {
-          const msgModel = new bootstrap.Modal("#checkNum_Children", {
+          document.getElementById("errmsg").innerHTML = "Please enter the number of children.";
+          const msgModel = new bootstrap.Modal("#checkInput", {
             keyboard: false,
           });
           msgModel.show();
@@ -116,7 +120,8 @@
 
         var tra_dates = document.getElementById("travel_dates").value;
         if (!tra_dates.match(/\S/)) {
-          const msgModel = new bootstrap.Modal("#checkTravel_Dates", {
+          document.getElementById("errmsg").innerHTML = "Please enter the number of dates.";
+          const msgModel = new bootstrap.Modal("#checkInput", {
             keyboard: false,
           });
           msgModel.show();
@@ -138,16 +143,16 @@
     </script>
   </head>
 
-  <body class="d-flex align-items-center py-4 bg-body-tertiary">
+  <body class="d-flex flex-column align-items-center bg-body-tertiary">
     <!-- Modal -->
-    <div class="modal fade" id="checkNum_Adults" tabindex="-1" aria-hidden="true">
+    <div class="modal fade" id="checkInput" tabindex="-1" aria-hidden="true">
       <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
           <div class="modal-header">
             <h1 class="modal-title fs-5">Error</h1>
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
-          <div class="modal-body">Please enter the number of adults.</div>
+          <div class="modal-body" id="errmsg">Error Message.</div>
           <div class="modal-footer">
             <button type="button" class="btn btn-primary" data-bs-dismiss="modal">OK</button>
           </div>
@@ -155,35 +160,37 @@
       </div>
     </div>
 
-    <div class="modal fade" id="checkNum_Children" tabindex="-1" aria-hidden="true">
-      <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h1 class="modal-title fs-5">Error</h1>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-          </div>
-          <div class="modal-body">Please enter the number of children.</div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-primary" data-bs-dismiss="modal">OK</button>
+    <header class="w-100 shadow px-0 sticky-top">
+      <nav class="navbar navbar-expand-md navbar-dark bg-dark" aria-label="First navbar example">
+        <div class="container-fluid">
+          <a class="navbar-brand" href="/index">Quotation System</a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarsExample01" aria-controls="navbarsExample01" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarsExample01">
+            <ul class="navbar-nav me-auto mb-2">
+              <li class="nav-item">
+                <a class="nav-link active" aria-current="page" href="#">Home</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#">Logout</a>
+              </li>
+              <!-- <li class="nav-item">
+                <a class="nav-link disabled">Disabled</a>
+              </li> -->
+              <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" aria-expanded="false">Admin</a>
+                <ul class="dropdown-menu">
+                  <li><a class="dropdown-item" href="#">Access Logs</a></li>
+                  <!-- <li><a class="dropdown-item" href="#">Another action</a></li>
+                  <li><a class="dropdown-item" href="#">Something else here</a></li> -->
+                </ul>
+              </li>
+            </ul>
           </div>
         </div>
-      </div>
-    </div>
-
-    <div class="modal fade" id="checkTravel_Dates" tabindex="-1" aria-hidden="true">
-      <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h1 class="modal-title fs-5">Error</h1>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-          </div>
-          <div class="modal-body">Please enter the number of dates.</div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-primary" data-bs-dismiss="modal">OK</button>
-          </div>
-        </div>
-      </div>
-    </div>
+      </nav>
+    </header>
 
     <main class="form-signin w-100 m-auto">
       <form method="post" action="/result">
