@@ -280,9 +280,9 @@ module.exports = async function calc(reqBody) {
             total_day += parseFloat(objReq.days[i].num_other);
         }
 
-        //东京地区当天总价上浮10%
+        //东京地区当天总价上浮5%
         if (objReq.days[i].br_area == "tokyo") {
-            total_day = total_day * 1.1;
+            total_day = total_day * 1.05;
         }
 
         console.log("Day" + (i + 1) + ": " + Math.round(total_day));
@@ -295,8 +295,8 @@ module.exports = async function calc(reqBody) {
     objResult.total_amount += 2000 * objReq.num_adults + 2000 * objReq.num_children;
     objResult.tip_qty = parseInt(objReq.num_adults) + parseInt(objReq.num_children);
 
-    //公司运营成本15% + 基础信息技术服务费用 + 基础设备添置
-    objResult.total_amount = Math.round(objResult.total_amount * 1.15 + 20000 + 10000);
+    //公司运营成本5% + 基础信息技术服务费用 + 基础设备添置
+    objResult.total_amount = Math.round(objResult.total_amount * 1.05 + 20000 + 10000);
 
     //勾选项目种类低于3的话，不提供报价
     if (objResult.guide_qty > 0) intCheckBoxCount += 1;
