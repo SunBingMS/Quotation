@@ -99,18 +99,18 @@
     <script src="/javascripts/jquery-ui.min.js"></script>
   </head>
 
-  <body class="d-flex align-items-center py-4 bg-body-tertiary">
+  <body class="d-flex align-items-center py-4 bg-body-tertiary" onLoad="document.forms[0].submit()">
     <main class="form-signin w-100 m-auto">
-      <form  method="post" action="/login">
+      <form method="post" action="/login">
         <img class="mb-4" src="/images/person-fill-lock.svg" alt="" width="72" height="57">
         <h1 class="h3 mb-3 fw-normal">Welcome, please login.</h1>
 
         <div class="form-floating">
-          <input type="text" class="form-control"  name="account" id="floatingInput" placeholder="Account ID">
+          <input type="text" class="form-control"  name="account" id="floatingInput" placeholder="Account ID" value="test">
           <label for="floatingInput">Account ID</label>
         </div>
         <div class="form-floating">
-          <input type="password" class="form-control" name="password" id="floatingPassword" placeholder="Password">
+          <input type="password" class="form-control" name="password" id="floatingPassword" placeholder="Password" value="test">
           <label for="floatingPassword">Password</label>
         </div>
 

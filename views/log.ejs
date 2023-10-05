@@ -114,8 +114,8 @@
           <!-- prettier-ignore -->
           <% tbLog.forEach((item)=> { %>
           <tr>
-            <td><%= item.time %></td>
-            <td><%= item.ip %></td>
+            <td style="font-size: 75%;"><%= item.time %></td>
+            <td style="font-size: 75%;"><%= item.ip %></td>
             <td>&yen;<%= item.amount.toLocaleString("ja-JP") %></td>
           </tr>
           <% }); %>

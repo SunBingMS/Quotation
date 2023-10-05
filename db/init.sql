@@ -41,3 +41,6 @@ insert into m_ticket values('3', 'Shinkansen', '16000', '16000');
 
 create table t_log(time, ip, num_adults, num_children, travel_dates, amount);
 create table m_user(account, password);
+DELETE FROM m_user;
+insert into m_user values('admin', 'admin');
+insert into m_user values('test', 'test');
