@@ -38,7 +38,7 @@ module.exports = {
   getCar: async kind => {
     // We use a try catch block in case of db errors
     try {
-        return await db.all("SELECT * FROM m_car WHERE kind = ? ORDER BY CAST(upper_limit AS INTEGER) ASC", kind);
+      return await db.all("SELECT * FROM m_car WHERE kind = ? ORDER BY CAST(upper_limit AS INTEGER) ASC", kind);
     } catch (dbError) {
       // Database connection error
       console.error(dbError);
@@ -48,7 +48,7 @@ module.exports = {
   getHotel: async level => {
     // We use a try catch block in case of db errors
     try {
-        return await db.all("SELECT price_adult, price_child FROM m_hotel WHERE level = ?", level);
+      return await db.all("SELECT price_adult, price_child FROM m_hotel WHERE level = ?", level);
     } catch (dbError) {
       // Database connection error
       console.error(dbError);
@@ -97,15 +97,18 @@ module.exports = {
 
   insertLog: async (ip, num_adults, num_children, travel_dates, amount) => {
     try {
-        await db.run("INSERT INTO t_log (time, ip, num_adults, num_children, travel_dates, amount) VALUES (?, ?, ?, ?, ?, ?)", [
-          //new Date().toISOString(),
-          new Date().toLocaleString({ timeZone: 'Asia/Tokyo' }),
-          ip,
-          num_adults,
-          num_children,
-          travel_dates,
-          amount
-        ]);
+      var date = new Date();
+      date.setTime(date.getTime() + (9 * 60 * 60 * 1000));
+      var str_date = date.toISOString().replace('T', ' ').substring(0, 19);
+      await db.run("INSERT INTO t_log (time, ip, num_adults, num_children, travel_dates, amount) VALUES (?, ?, ?, ?, ?, ?)", [
+        //new Date().toISOString(),
+        str_date,
+        ip,
+        num_adults,
+        num_children,
+        travel_dates,
+        amount
+      ]);
     } catch (dbError) {
       console.error(dbError);
     }
