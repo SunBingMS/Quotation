@@ -8,6 +8,11 @@ router.get('/', function(req, res, next) {
   res.render('login', {err: ""});
 });
 
+router.get('/logout', (req, res) => {
+  req.session.destroy();
+  res.redirect('/');
+});
+
 router.post('/login', async function(req, res) {
   let {account, password} = req.body;
   const tbUser = await db.getUser(account.trim(), password.trim());
