@@ -7,6 +7,12 @@ const calc = require("../module/calc.js");
 router.get('/index', isAuthenticated, async function(req, res, next) {
   const tbProject = await db.getProject("");
   const tbTicket = await db.getTicket("");
+
+  //Log
+  var strIP = (req.headers['x-forwarded-for'] || req.connection.remoteAddress || '').split(',')[0].trim();
+  if (strIP.includes("::ffff:")) strIP = strIP.replace('::ffff:', '');
+  await db.insertLog(strIP, '0', '0', '0', '0');
+
   res.render('index', {loop: 3, tbProject, tbTicket});
 });
 
