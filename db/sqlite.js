@@ -95,7 +95,7 @@ module.exports = {
     }
   },
 
-  insertLog: async (ip, num_adults, num_children, travel_dates, amount) => {
+  insertLog: async (ip, objReq, amount) => {
     try {
       var date = new Date();
       date.setTime(date.getTime() + (9 * 60 * 60 * 1000));
@@ -104,11 +104,31 @@ module.exports = {
         //new Date().toISOString(),
         str_date,
         ip,
-        num_adults,
-        num_children,
-        travel_dates,
+        objReq.num_adults,
+        objReq.num_children,
+        objReq.travel_dates,
         amount
       ]);
+
+      for (let i = 0; i < objReq.travel_dates; i++) {
+        await db.run("INSERT INTO t_log_detail (time, num_day, ck_guide, ck_lunch, ck_dinner, ck_car, br_car, ck_hotel, br_area, br_hotel, ck_experiences, dd_experiences, ck_ticket, dd_ticket, num_other) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", [
+          str_date,
+          i,
+          objReq.days[i].ck_guide,
+          objReq.days[i].ck_lunch,
+          objReq.days[i].ck_dinner,
+          objReq.days[i].ck_car,
+          objReq.days[i].br_car,
+          objReq.days[i].ck_hotel,
+          objReq.days[i].br_area,
+          objReq.days[i].br_hotel,
+          objReq.days[i].ck_experiences,
+          JSON.stringify(objReq.days[i].dd_experiences),
+          objReq.days[i].ck_ticket,
+          JSON.stringify(objReq.days[i].dd_ticket),
+          objReq.days[i].num_other
+        ]);
+      }
     } catch (dbError) {
       console.error(dbError);
     }

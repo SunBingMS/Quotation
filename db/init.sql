@@ -40,6 +40,8 @@ insert into m_ticket values('2', 'Temple', '500', '500');
 insert into m_ticket values('3', 'Shinkansen', '16000', '16000');
 
 create table t_log(time, ip, num_adults, num_children, travel_dates, amount);
+create table t_log_detail(time, num_day, ck_guide, ck_lunch, ck_dinner, ck_car, br_car, ck_hotel, br_area, br_hotel, ck_experiences, dd_experiences, ck_ticket, dd_ticket, num_other);
+
 create table m_user(account, password);
 DELETE FROM m_user;
 insert into m_user values('admin', 'admin');
