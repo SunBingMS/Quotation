@@ -122,7 +122,7 @@ module.exports = {
       var str_date = date.toISOString().replace('T', ' ').substring(0, 19);
 
       await db.run("INSERT INTO t_log (id, time, ip, num_adults, num_children, travel_dates, amount) VALUES (?, ?, ?, ?, ?, ?, ?)", [
-        str_date.replaceAll(' ', '').replaceAll('-', '').replaceAll(':', ''),
+        str_date.replace(/ /g, '').replace(/-/g, '').replace(/:/g, ''),
         str_date,
         ip,
         0,
