@@ -95,24 +95,63 @@ module.exports = {
     }
   },
 
-  insertLog: async (ip, objReq, amount) => {
+  getOrder: async (order_id) => {
+    // We use a try catch block in case of db errors
+    try {
+      return await db.all("SELECT id, time, ip, num_adults, num_children, travel_dates, amount FROM t_log WHERE id = ?", order_id);
+    } catch (dbError) {
+      // Database connection error
+      console.error(dbError);
+    }
+  },
+
+  getOrderDetail: async (order_id) => {
+    // We use a try catch block in case of db errors
+    try {
+      return await db.all("SELECT num_day, ck_guide, ck_lunch, ck_dinner, ck_car, br_car, ck_hotel, br_area, br_hotel, ck_experiences, dd_experiences, ck_ticket, dd_ticket, num_other FROM t_log_detail WHERE id = ? ORDER BY num_day", order_id);
+    } catch (dbError) {
+      // Database connection error
+      console.error(dbError);
+    }
+  },
+
+  insertLoginLog: async (ip, objReq) => {
     try {
       var date = new Date();
       date.setTime(date.getTime() + (9 * 60 * 60 * 1000));
       var str_date = date.toISOString().replace('T', ' ').substring(0, 19);
-      await db.run("INSERT INTO t_log (time, ip, num_adults, num_children, travel_dates, amount) VALUES (?, ?, ?, ?, ?, ?)", [
-        //new Date().toISOString(),
+
+      await db.run("INSERT INTO t_log (id, time, ip, num_adults, num_children, travel_dates, amount) VALUES (?, ?, ?, ?, ?, ?, ?)", [
+        str_date.replaceAll(' ', '').replaceAll('-', '').replaceAll(':', ''),
         str_date,
+        ip,
+        0,
+        0,
+        0,
+        0
+      ]);
+
+    } catch (dbError) {
+      console.error(dbError);
+    }
+  },
+
+  insertSubmitLog: async (ip, objReq, objResult) => {
+    try {
+      await db.run("INSERT INTO t_log (id, time, ip, num_adults, num_children, travel_dates, amount) VALUES (?, ?, ?, ?, ?, ?, ?)", [
+        objResult.order_id,
+        objResult.order_time,
         ip,
         objReq.num_adults,
         objReq.num_children,
         objReq.travel_dates,
-        amount
+        objResult.total_amount
       ]);
 
       for (let i = 0; i < objReq.travel_dates; i++) {
-        await db.run("INSERT INTO t_log_detail (time, num_day, ck_guide, ck_lunch, ck_dinner, ck_car, br_car, ck_hotel, br_area, br_hotel, ck_experiences, dd_experiences, ck_ticket, dd_ticket, num_other) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", [
-          str_date,
+        await db.run("INSERT INTO t_log_detail (id, time, num_day, ck_guide, ck_lunch, ck_dinner, ck_car, br_car, ck_hotel, br_area, br_hotel, ck_experiences, dd_experiences, ck_ticket, dd_ticket, num_other) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", [
+          objResult.order_id,
+          objResult.order_time,
           i,
           objReq.days[i].ck_guide,
           objReq.days[i].ck_lunch,

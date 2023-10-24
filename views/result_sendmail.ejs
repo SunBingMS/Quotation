@@ -4,7 +4,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="description" content="" />
-    <title>Quotation - Result</title>
+    <title>Quotation - Result_SendMail</title>
 
     <link href="/stylesheets/bootstrap.min.css" rel="stylesheet" />
     <link href="/stylesheets/jquery-ui.min.css" rel="stylesheet" />
@@ -133,87 +133,13 @@
     </header>
 
     <main class="form-signin w-100 m-auto">
-      <h1 class="h3 mb-3 fw-normal">TRAVEL QUOTATION</h1>
-      <table class="table">
-        <thead>
-          <tr>
-            <th scope="col">Discription</th>
-            <th scope="col">Qty</th>
-          </tr>
-        </thead>
-        <tbody class="table-group-divider">
-          <tr>
-            <td>Guide Service</td>
-            <td><%= objResult.guide_qty %></td>
-          </tr>
-          <tr>
-            <td>Lunch Order Service</td>
-            <td><%= objResult.lunch_qty %></td>
-          </tr>
-          <tr>
-            <td>Dinner Order Service</td>
-            <td><%= objResult.dinner_qty %></td>
-          </tr>
-          <tr>
-            <td>Road Transportation</td>
-            <td><%= objResult.car_qty %></td>
-          </tr>
-          <tr>
-            <td>Hotel Accommodation</td>
-            <td><%= objResult.hotel_qty %></td>
-          </tr>
-          <% if (objResult.experiences_qty.length > 0) { %>
-          <tr>
-            <td>Tourist Experiences:</td>
-            <td></td>
-          </tr>
-          <% } %>
-          <!-- prettier-ignore -->
-          <% objResult.experiences_qty.forEach((item)=> { %>
-          <tr>
-            <td><%= item.name %></td>
-            <td><%= item.qty %></td>
-          </tr>
-          <% }); %>
-          <!-- prettier-ignore -->
-          <% if (objResult.ticket_qty.length > 0) { %>
-          <tr>
-            <td>Ticket Booking Service:</td>
-            <td></td>
-          </tr>
-          <% } %>
-          <!-- prettier-ignore -->
-          <% objResult.ticket_qty.forEach((item)=> { %>
-          <tr>
-            <td><%= item.name %></td>
-            <td><%= item.qty %></td>
-          </tr>
-          <% }); %>
-          <tr>
-            <td>Tipping</td>
-            <td><%= objResult.tip_qty %></td>
-          </tr>
-        </tbody>
-      </table>
-
-      <div align="right">
-        <% if (objResult.total_amount == 0) { %>
-        <p>Amount: <span style="font-size: 24px">&yen;******</span></p>
-        <% } else { %>
-        <p>Amount: <span style="font-size: 24px">&yen;<%= objResult.total_amount.toLocaleString("ja-JP") %></span></p>
-        <% } %>
+      <h1 class="h3 mb-3 fw-normal">ORDER CONFIRMED</h1>
+      <div class="alert alert-primary" role="alert">
+        <h4 class="alert-heading">Thank you!</h4>
+        <p>Your order has been confirmed, please wait for our contact later.</p>
       </div>
-      <% if (objResult.total_amount == 0) { %>
-      <p><span style="color: red">The number of selected service items is below the minimum requirement.</span></p>
-      <% } %>
-
       <br />
-      <form method="post" action="/result_accept">
-        <input name="order_id" type="hidden" value="<%= objResult.order_id %>" />
-        <button class="btn btn-success w-100 py-2" type="submit">Accept</button>
-      </form>
-      <br />
-      <button class="btn btn-primary w-100 py-2" type="button" onclick="location.href='/'">Back</button>
+      <button class="btn btn-primary w-100 py-2" type="button" onclick="location.href='/'">Home</button>
     </main>
   </body>
 </html>

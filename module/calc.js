@@ -27,6 +27,8 @@ module.exports = async function calc(objReq) {
 
     //报价结果
     var objResult = {
+        order_id:"",
+        order_time:"",
         guide_qty: 0,
         lunch_qty: 0,
         dinner_qty: 0,
@@ -55,6 +57,12 @@ module.exports = async function calc(objReq) {
     var tbTicket;
 
     var intTotal_people = parseInt(objReq.num_adults) + parseInt(objReq.num_children);
+
+    var date = new Date();
+    date.setTime(date.getTime() + (9 * 60 * 60 * 1000));
+    var str_date = date.toISOString().replace('T', ' ').substring(0, 19);
+    objResult.order_id = str_date.replaceAll(' ', '').replaceAll('-', '').replaceAll(':', '');
+    objResult.order_time = str_date;
 
     for (let i = 0; i < objReq.travel_dates; i++) {
         total_day = 0.0;

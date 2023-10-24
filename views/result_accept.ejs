@@ -4,7 +4,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="description" content="" />
-    <title>Quotation - Result</title>
+    <title>Quotation - Result_Accept</title>
 
     <link href="/stylesheets/bootstrap.min.css" rel="stylesheet" />
     <link href="/stylesheets/jquery-ui.min.css" rel="stylesheet" />
@@ -133,87 +133,29 @@
     </header>
 
     <main class="form-signin w-100 m-auto">
-      <h1 class="h3 mb-3 fw-normal">TRAVEL QUOTATION</h1>
-      <table class="table">
-        <thead>
-          <tr>
-            <th scope="col">Discription</th>
-            <th scope="col">Qty</th>
-          </tr>
-        </thead>
-        <tbody class="table-group-divider">
-          <tr>
-            <td>Guide Service</td>
-            <td><%= objResult.guide_qty %></td>
-          </tr>
-          <tr>
-            <td>Lunch Order Service</td>
-            <td><%= objResult.lunch_qty %></td>
-          </tr>
-          <tr>
-            <td>Dinner Order Service</td>
-            <td><%= objResult.dinner_qty %></td>
-          </tr>
-          <tr>
-            <td>Road Transportation</td>
-            <td><%= objResult.car_qty %></td>
-          </tr>
-          <tr>
-            <td>Hotel Accommodation</td>
-            <td><%= objResult.hotel_qty %></td>
-          </tr>
-          <% if (objResult.experiences_qty.length > 0) { %>
-          <tr>
-            <td>Tourist Experiences:</td>
-            <td></td>
-          </tr>
-          <% } %>
-          <!-- prettier-ignore -->
-          <% objResult.experiences_qty.forEach((item)=> { %>
-          <tr>
-            <td><%= item.name %></td>
-            <td><%= item.qty %></td>
-          </tr>
-          <% }); %>
-          <!-- prettier-ignore -->
-          <% if (objResult.ticket_qty.length > 0) { %>
-          <tr>
-            <td>Ticket Booking Service:</td>
-            <td></td>
-          </tr>
-          <% } %>
-          <!-- prettier-ignore -->
-          <% objResult.ticket_qty.forEach((item)=> { %>
-          <tr>
-            <td><%= item.name %></td>
-            <td><%= item.qty %></td>
-          </tr>
-          <% }); %>
-          <tr>
-            <td>Tipping</td>
-            <td><%= objResult.tip_qty %></td>
-          </tr>
-        </tbody>
-      </table>
+      <h1 class="h3 mb-3 fw-normal">CONFIRM ORDER</h1>
+      <form method="post" action="/result_sendmail">
+        <div class="col-12">
+          <label for="order_id" class="form-label">Your Order ID</label>
+          <input type="text" class="form-control" id="order_id" name="order_id" value="<%= order_id %>" readonly/>
+        </div>
 
-      <div align="right">
-        <% if (objResult.total_amount == 0) { %>
-        <p>Amount: <span style="font-size: 24px">&yen;******</span></p>
-        <% } else { %>
-        <p>Amount: <span style="font-size: 24px">&yen;<%= objResult.total_amount.toLocaleString("ja-JP") %></span></p>
-        <% } %>
-      </div>
-      <% if (objResult.total_amount == 0) { %>
-      <p><span style="color: red">The number of selected service items is below the minimum requirement.</span></p>
-      <% } %>
+        <br />
 
-      <br />
-      <form method="post" action="/result_accept">
-        <input name="order_id" type="hidden" value="<%= objResult.order_id %>" />
-        <button class="btn btn-success w-100 py-2" type="submit">Accept</button>
+        <div class="col-12">
+          <label for="contact" class="form-label">Your Contact Information</label>
+          <textarea type="text" class="form-control" style="height: 200px;" id="contact" name="contact" placeholder="Name, E-Mail, Phone..." maxlength="100" required></textarea>
+          <div class="invalid-feedback">
+            Your contact information is required.
+          </div>
+        </div>
+
+        <br />
+        <button class="btn btn-success w-100 py-2" type="submit">Send Order</button>
       </form>
+
       <br />
-      <button class="btn btn-primary w-100 py-2" type="button" onclick="location.href='/'">Back</button>
+      <button class="btn btn-primary w-100 py-2" type="button" onclick="location.href='/'">Cancel</button>
     </main>
   </body>
 </html>

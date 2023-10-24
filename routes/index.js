@@ -3,6 +3,7 @@ var router = express.Router();
 
 const db = require("../db/sqlite.js");
 const calc = require("../module/calc.js");
+const sendmail = require("../module/sendmail.js");
 
 router.get('/index', isAuthenticated, async function (req, res, next) {
   const tbProject = await db.getProject("");
@@ -17,7 +18,7 @@ router.get('/index', isAuthenticated, async function (req, res, next) {
     travel_dates: '0',
     days: []
   };
-  await db.insertLog(strIP, objReq, '0');
+  await db.insertLoginLog(strIP, objReq, '0');
 
   res.render('index', { loop: 3, tbProject, tbTicket });
 });
@@ -191,10 +192,23 @@ router.post('/result', isAuthenticated, async function (req, res) {
   //Log
   var strIP = (req.headers['x-forwarded-for'] || req.connection.remoteAddress || '').split(',')[0].trim();
   if (strIP.includes("::ffff:")) strIP = strIP.replace('::ffff:', '');
-  await db.insertLog(strIP, objReq, objResult.total_amount);
+  await db.insertSubmitLog(strIP, objReq, objResult);
 
   res.render('result', { objResult });
   // res.send('Calc Result')
+});
+
+router.post('/result_accept', isAuthenticated, async function (req, res, next) {
+  const order_id = req.body.order_id;
+  console.log(order_id);
+  res.render('result_accept', { order_id });
+});
+
+router.post('/result_sendmail', isAuthenticated, async function (req, res, next) {
+  const order_id = req.body.order_id;
+  const contact = req.body.contact;
+  await sendmail(order_id, contact);
+  res.render('result_sendmail');
 });
 
 function isAuthenticated(req, res, next) {
