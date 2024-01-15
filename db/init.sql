@@ -37,7 +37,12 @@ create table m_ticket(id, name, price_adult, price_child);
 DELETE FROM m_ticket;
 insert into m_ticket values('1', 'USJ or Disney', '11000', '11000');
 insert into m_ticket values('2', 'Temple', '500', '500');
-insert into m_ticket values('3', 'Shinkansen', '16000', '16000');
+insert into m_ticket values('3', 'Bullet Train(Tokyo-Osaka)', '16000', '16000');
+insert into m_ticket values('4', 'Bullet Train(Tokyo-Nagoya)', '12000', '12000');
+insert into m_ticket values('5', 'Owakudani valley & Hakone Rope Way', '4000', '4000');
+insert into m_ticket values('6', 'Pirate ship cruise on Lake Ashi', '3000', '3000');
+insert into m_ticket values('7', 'Team Lab Planet Tokyo', '5000', '5000');
+insert into m_ticket values('8', 'Sky Tree', '3500', '3500');
 
 create table t_log(id, time, ip, num_adults, num_children, travel_dates, amount);
 create table t_log_detail(id, time, num_day, ck_guide, ck_lunch, ck_dinner, ck_car, br_car, ck_hotel, br_area, br_hotel, ck_experiences, dd_experiences, ck_ticket, dd_ticket, num_other);

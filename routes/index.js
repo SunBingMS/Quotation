@@ -47,7 +47,7 @@ router.post('/result', isAuthenticated, async function (req, res) {
         dd_experiences: req.body.D1_dd_experiences,
         ck_ticket: req.body.D1_ck_ticket,
         dd_ticket: req.body.D1_dd_ticket,
-        num_other: parseFloat(req.body.D1_num_other)
+        num_other: parseFloat(req.body.D1_num_other) || 0
       },
       {
         ck_guide: req.body.D2_ck_guide,
@@ -62,7 +62,7 @@ router.post('/result', isAuthenticated, async function (req, res) {
         dd_experiences: req.body.D2_dd_experiences,
         ck_ticket: req.body.D2_ck_ticket,
         dd_ticket: req.body.D2_dd_ticket,
-        num_other: parseFloat(req.body.D2_num_other)
+        num_other: parseFloat(req.body.D2_num_other) || 0
       },
       {
         ck_guide: req.body.D3_ck_guide,
@@ -77,7 +77,7 @@ router.post('/result', isAuthenticated, async function (req, res) {
         dd_experiences: req.body.D3_dd_experiences,
         ck_ticket: req.body.D3_ck_ticket,
         dd_ticket: req.body.D3_dd_ticket,
-        num_other: parseFloat(req.body.D3_num_other)
+        num_other: parseFloat(req.body.D3_num_other) || 0
       },
       {
         ck_guide: req.body.D4_ck_guide,
@@ -92,7 +92,7 @@ router.post('/result', isAuthenticated, async function (req, res) {
         dd_experiences: req.body.D4_dd_experiences,
         ck_ticket: req.body.D4_ck_ticket,
         dd_ticket: req.body.D4_dd_ticket,
-        num_other: parseFloat(req.body.D4_num_other)
+        num_other: parseFloat(req.body.D4_num_other) || 0
       },
       {
         ck_guide: req.body.D5_ck_guide,
@@ -107,7 +107,7 @@ router.post('/result', isAuthenticated, async function (req, res) {
         dd_experiences: req.body.D5_dd_experiences,
         ck_ticket: req.body.D5_ck_ticket,
         dd_ticket: req.body.D5_dd_ticket,
-        num_other: parseFloat(req.body.D5_num_other)
+        num_other: parseFloat(req.body.D5_num_other) || 0
       },
       {
         ck_guide: req.body.D6_ck_guide,
@@ -122,7 +122,7 @@ router.post('/result', isAuthenticated, async function (req, res) {
         dd_experiences: req.body.D6_dd_experiences,
         ck_ticket: req.body.D6_ck_ticket,
         dd_ticket: req.body.D6_dd_ticket,
-        num_other: parseFloat(req.body.D6_num_other)
+        num_other: parseFloat(req.body.D6_num_other) || 0
       },
       {
         ck_guide: req.body.D7_ck_guide,
@@ -137,7 +137,7 @@ router.post('/result', isAuthenticated, async function (req, res) {
         dd_experiences: req.body.D7_dd_experiences,
         ck_ticket: req.body.D7_ck_ticket,
         dd_ticket: req.body.D7_dd_ticket,
-        num_other: parseFloat(req.body.D7_num_other)
+        num_other: parseFloat(req.body.D7_num_other) || 0
       },
       {
         ck_guide: req.body.D8_ck_guide,
@@ -152,7 +152,7 @@ router.post('/result', isAuthenticated, async function (req, res) {
         dd_experiences: req.body.D8_dd_experiences,
         ck_ticket: req.body.D8_ck_ticket,
         dd_ticket: req.body.D8_dd_ticket,
-        num_other: parseFloat(req.body.D8_num_other)
+        num_other: parseFloat(req.body.D8_num_other) || 0
       },
       {
         ck_guide: req.body.D9_ck_guide,
@@ -167,7 +167,7 @@ router.post('/result', isAuthenticated, async function (req, res) {
         dd_experiences: req.body.D9_dd_experiences,
         ck_ticket: req.body.D9_ck_ticket,
         dd_ticket: req.body.D9_dd_ticket,
-        num_other: parseFloat(req.body.D9_num_other)
+        num_other: parseFloat(req.body.D9_num_other) || 0
       },
       {
         ck_guide: req.body.D10_ck_guide,
@@ -182,7 +182,7 @@ router.post('/result', isAuthenticated, async function (req, res) {
         dd_experiences: req.body.D10_dd_experiences,
         ck_ticket: req.body.D10_ck_ticket,
         dd_ticket: req.body.D10_dd_ticket,
-        num_other: parseFloat(req.body.D10_num_other)
+        num_other: parseFloat(req.body.D10_num_other) || 0
       },
     ]
   };
