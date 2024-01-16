@@ -200,137 +200,151 @@
       </nav>
     </header>
 
-    <main class="form-signin w-100 m-auto">
+    <main class="w-100 m-auto">
       <form method="post" action="/result">
-        <img class="mb-4" src="/images/calculator-fill.svg" alt="" width="72" height="57" />
-        <h1 class="h3 mb-3 fw-normal">Please enter your itinerary.</h1>
+        <div class="container">
+          <div class="row justify-content-center">
+            <div class="form-signin col-10 col-md-8 col-xl-4">
+              <img class="mb-4" src="/images/calculator-fill.svg" alt="" width="72" height="57" />
+              <h1 class="h3 mb-3 fw-normal">Please enter your itinerary.</h1>
 
-        <div class="form-floating">
-          <input type="TXT_START" class="form-control" name="num_adults" id="num_adults" placeholder="" maxlength="3" oninput="value = value.replace(/[^0-9]+/i,'');" />
-          <label for="num_adults">Number of adults</label>
-        </div>
-        <div class="form-floating">
-          <input type="TXT_MID" class="form-control" name="num_children" id="num_children" placeholder="" maxlength="3" oninput="value = value.replace(/[^0-9]+/i,'');" />
-          <label for="num_children">Number of children</label>
-        </div>
-        <div class="form-floating">
-          <input type="TXT_END" class="form-control" name="travel_dates" id="travel_dates" placeholder="" maxlength="1" oninput="value = value.replace(/[^0-9]+/i,'');" />
-          <label for="trave_dates">Travel Dates</label>
-        </div>
+              <div class="form-floating">
+                <input type="TXT_START" class="form-control" name="num_adults" id="num_adults" placeholder="" maxlength="3" oninput="value = value.replace(/[^0-9]+/i,'');" />
+                <label for="num_adults">Number of adults</label>
+              </div>
+              <div class="form-floating">
+                <input type="TXT_MID" class="form-control" name="num_children" id="num_children" placeholder="" maxlength="3" oninput="value = value.replace(/[^0-9]+/i,'');" />
+                <label for="num_children">Number of children</label>
+              </div>
+              <div class="form-floating">
+                <input type="TXT_END" class="form-control" name="travel_dates" id="travel_dates" placeholder="" maxlength="1" oninput="value = value.replace(/[^0-9]+/i,'');" />
+                <label for="trave_dates">Travel Dates</label>
+              </div>
 
-        <button class="btn btn-primary w-100 py-2" id="more_details" type="button" onclick="funcMoreDetails()">More Details</button>
-        <hr class="my-4" />
-
-        <% for (var iDay=1; iDay <=10; iDay++) { %>
-        <div id="DIV_DAY<%= iDay %>" style="display: none">
-          <h1 class="h3 mb-3 fw-normal">Day <%= iDay %></h1>
-          <div class="list-group">
-            <label class="list-group-item d-flex gap-2">
-              <input class="form-check-input flex-shrink-0" name="D<%= iDay %>_ck_guide" type="checkbox" value="Y" />
-              <span>
-                Guide Service
-                <small class="d-block text-body-secondary">Include 10H service, lunch allowance, transportation package.</small>
-              </span>
-            </label>
-            <label class="list-group-item d-flex gap-2">
-              <input class="form-check-input flex-shrink-0" name="D<%= iDay %>_ck_lunch" type="checkbox" value="Y" />
-              <span>
-                Lunch Order Service
-                <small class="d-block text-body-secondary">Include 1 lunch per person.</small>
-              </span>
-            </label>
-            <label class="list-group-item d-flex gap-2">
-              <input class="form-check-input flex-shrink-0" name="D<%= iDay %>_ck_dinner" type="checkbox" value="Y" />
-              <span>
-                Dinner Order Service
-                <small class="d-block text-body-secondary">Include 1 dinner per person.</small>
-              </span>
-            </label>
-            <label class="list-group-item d-flex gap-2">
-              <input class="form-check-input flex-shrink-0" type="checkbox" name="D<%= iDay %>_ck_car" value="Y" checked />
-              <span>
-                Road Transportation
-                <div class="btn-group" role="group" aria-label="Basic radio toggle button group" style="width: 100%">
-                  <input type="radio" class="btn-check" name="D<%= iDay %>_br_car" id="D<%= iDay %>_br_car_10h" value="10h" autocomplete="off" checked />
-                  <label class="btn btn-outline-primary" for="D<%= iDay %>_br_car_10h">10H Charter</label>
-                  <input type="radio" class="btn-check" name="D<%= iDay %>_br_car" id="D<%= iDay %>_br_car_shuttle" value="shuttle" autocomplete="off" />
-                  <label class="btn btn-outline-primary" for="D<%= iDay %>_br_car_shuttle">Pickup Drop</label>
-                </div>
-                <small class="d-block text-body-secondary">10H charter service or pickup drop service.</small>
-              </span>
-            </label>
-            <label class="list-group-item d-flex gap-2">
-              <input class="form-check-input flex-shrink-0" type="checkbox" name="D<%= iDay %>_ck_hotel" value="Y" checked />
-              <span>
-                Hotel Accommodation
-                <div class="btn-group" role="group" aria-label="Basic radio toggle button group" style="width: 100%; padding-bottom: 10px">
-                  <input type="radio" class="btn-check" name="D<%= iDay %>_br_area" id="D<%= iDay %>_br_area_tokyo" value="tokyo" autocomplete="off" />
-                  <label class="btn btn-outline-primary" for="D<%= iDay %>_br_area_tokyo">Tokyo Area</label>
-                  <input type="radio" class="btn-check" name="D<%= iDay %>_br_area" id="D<%= iDay %>_br_area_other" value="other" autocomplete="off" checked />
-                  <label class="btn btn-outline-primary" for="D<%= iDay %>_br_area_other">Other Area</label>
-                </div>
-                <div class="btn-group" role="group" aria-label="Basic radio toggle button group" style="width: 100%">
-                  <input type="radio" class="btn-check" name="D<%= iDay %>_br_hotel" id="D<%= iDay %>_br_hotel_lv3" value="3" autocomplete="off" checked />
-                  <label class="btn btn-outline-primary" for="D<%= iDay %>_br_hotel_lv3">3 Star</label>
-                  <input type="radio" class="btn-check" name="D<%= iDay %>_br_hotel" id="D<%= iDay %>_br_hotel_lv4" value="4" autocomplete="off" />
-                  <label class="btn btn-outline-primary" for="D<%= iDay %>_br_hotel_lv4">4 Star</label>
-                  <input type="radio" class="btn-check" name="D<%= iDay %>_br_hotel" id="D<%= iDay %>_br_hotel_lv5" value="5" autocomplete="off" />
-                  <label class="btn btn-outline-primary" for="D<%= iDay %>_br_hotel_lv5">5 Star</label>
-                </div>
-                <small class="d-block text-body-secondary">Possible to have triple, twin sharing or double room.</small>
-              </span>
-            </label>
-            <label class="list-group-item d-flex gap-2">
-              <input class="form-check-input flex-shrink-0" type="checkbox" name="D<%= iDay %>_ck_experiences" value="Y" />
-              <span style="width: 100%">
-                Tourist Experiences
-                <!-- prettier-ignore -->
-                <% for (var i=0; i < loop; i++) { %>
-                <select class="form-select" name="D<%= iDay %>_dd_experiences" id="inputGroupSelect01">
-                  <option value="" selected>Choose...</option>
-                  <% tbProject.forEach((item)=> { %>
-                  <option value="<%= item.id %>"><%= item.name %></option>
-                  <% }); %>
-                </select>
-                <% } %>
-                <small class="d-block text-body-secondary">Provide various travel experience services.</small>
-              </span>
-            </label>
-            <label class="list-group-item d-flex gap-2">
-              <input class="form-check-input flex-shrink-0" type="checkbox" name="D<%= iDay %>_ck_ticket" value="Y" />
-              <span style="width: 100%">
-                Ticket Booking Service
-                <!-- prettier-ignore -->
-                <% for (var i=0; i < loop; i++) { %>
-                <select class="form-select" name="D<%= iDay %>_dd_ticket" id="inputGroupSelect01">
-                  <option value="" selected>Choose...</option>
-                  <% tbTicket.forEach((item)=> { %>
-                  <option value="<%= item.id %>"><%= item.name %></option>
-                  <% }); %>
-                </select>
-                <% } %>
-                <small class="d-block text-body-secondary">Provide various ticket booking services.</small>
-              </span>
-            </label>
-            <label class="list-group-item d-flex gap-2">
-              <span style="width: 100%">
-                <div class="form-floating">
-                  <input type="number" class="form-control" name="D<%= iDay %>_num_other" id="D<%= iDay %>_trave_dates" placeholder="" maxlength="10" value="0" />
-                  <label for="D<%= iDay %>_trave_dates">Additional Service Charges</label>
-                </div>
-                <small class="d-block text-body-secondary">Overtime service and additional service.</small>
-              </span>
-            </label>
+              <button class="btn btn-primary w-100 py-2" id="more_details" type="button" onclick="funcMoreDetails()">More Details</button>
+              <hr class="my-4" />
+            </div>
           </div>
-          <hr class="my-4" />
-        </div>
-        <% } %>
 
-        <div id="DIV_SUBMIT" style="display: none">
-          <button class="btn btn-primary w-100 py-2" type="submit">Submit</button>
-        </div>
+          <div class="row justify-content-center">
+            <% for (var iDay=1; iDay <=10; iDay++) { %>
+            <div class="form-signin col-10 col-md-8 col-xl-4">
+              <div id="DIV_DAY<%= iDay %>" style="display: none">
+                <h1 class="h3 mb-3 fw-normal">Day <%= iDay %></h1>
+                <div class="list-group">
+                  <label class="list-group-item d-flex gap-2">
+                    <input class="form-check-input flex-shrink-0" name="D<%= iDay %>_ck_guide" type="checkbox" value="Y" />
+                    <span>
+                      Guide Service
+                      <small class="d-block text-body-secondary">Include 10H service, lunch allowance, transportation package.</small>
+                    </span>
+                  </label>
+                  <label class="list-group-item d-flex gap-2">
+                    <input class="form-check-input flex-shrink-0" name="D<%= iDay %>_ck_lunch" type="checkbox" value="Y" />
+                    <span>
+                      Lunch Order Service
+                      <small class="d-block text-body-secondary">Include 1 lunch per person.</small>
+                    </span>
+                  </label>
+                  <label class="list-group-item d-flex gap-2">
+                    <input class="form-check-input flex-shrink-0" name="D<%= iDay %>_ck_dinner" type="checkbox" value="Y" />
+                    <span>
+                      Dinner Order Service
+                      <small class="d-block text-body-secondary">Include 1 dinner per person.</small>
+                    </span>
+                  </label>
+                  <label class="list-group-item d-flex gap-2">
+                    <input class="form-check-input flex-shrink-0" type="checkbox" name="D<%= iDay %>_ck_car" value="Y" checked />
+                    <span>
+                      Road Transportation
+                      <div class="btn-group" role="group" aria-label="Basic radio toggle button group" style="width: 100%">
+                        <input type="radio" class="btn-check" name="D<%= iDay %>_br_car" id="D<%= iDay %>_br_car_10h" value="10h" autocomplete="off" checked />
+                        <label class="btn btn-outline-primary" for="D<%= iDay %>_br_car_10h">10H Charter</label>
+                        <input type="radio" class="btn-check" name="D<%= iDay %>_br_car" id="D<%= iDay %>_br_car_shuttle" value="shuttle" autocomplete="off" />
+                        <label class="btn btn-outline-primary" for="D<%= iDay %>_br_car_shuttle">Pickup Drop</label>
+                      </div>
+                      <small class="d-block text-body-secondary">10H charter service or pickup drop service.</small>
+                    </span>
+                  </label>
+                  <label class="list-group-item d-flex gap-2">
+                    <input class="form-check-input flex-shrink-0" type="checkbox" name="D<%= iDay %>_ck_hotel" value="Y" checked />
+                    <span>
+                      Hotel Accommodation
+                      <div class="btn-group" role="group" aria-label="Basic radio toggle button group" style="width: 100%; padding-bottom: 10px">
+                        <input type="radio" class="btn-check" name="D<%= iDay %>_br_area" id="D<%= iDay %>_br_area_tokyo" value="tokyo" autocomplete="off" />
+                        <label class="btn btn-outline-primary" for="D<%= iDay %>_br_area_tokyo">Tokyo Area</label>
+                        <input type="radio" class="btn-check" name="D<%= iDay %>_br_area" id="D<%= iDay %>_br_area_other" value="other" autocomplete="off" checked />
+                        <label class="btn btn-outline-primary" for="D<%= iDay %>_br_area_other">Other Area</label>
+                      </div>
+                      <div class="btn-group" role="group" aria-label="Basic radio toggle button group" style="width: 100%">
+                        <input type="radio" class="btn-check" name="D<%= iDay %>_br_hotel" id="D<%= iDay %>_br_hotel_lv3" value="3" autocomplete="off" checked />
+                        <label class="btn btn-outline-primary" for="D<%= iDay %>_br_hotel_lv3">3 Star</label>
+                        <input type="radio" class="btn-check" name="D<%= iDay %>_br_hotel" id="D<%= iDay %>_br_hotel_lv4" value="4" autocomplete="off" />
+                        <label class="btn btn-outline-primary" for="D<%= iDay %>_br_hotel_lv4">4 Star</label>
+                        <input type="radio" class="btn-check" name="D<%= iDay %>_br_hotel" id="D<%= iDay %>_br_hotel_lv5" value="5" autocomplete="off" />
+                        <label class="btn btn-outline-primary" for="D<%= iDay %>_br_hotel_lv5">5 Star</label>
+                      </div>
+                      <small class="d-block text-body-secondary">Possible to have triple, twin sharing or double room.</small>
+                    </span>
+                  </label>
+                  <label class="list-group-item d-flex gap-2">
+                    <input class="form-check-input flex-shrink-0" type="checkbox" name="D<%= iDay %>_ck_experiences" value="Y" />
+                    <span style="width: 100%">
+                      Tourist Experiences
+                      <!-- prettier-ignore -->
+                      <% for (var i=0; i < loop; i++) { %>
+                      <select class="form-select" name="D<%= iDay %>_dd_experiences" id="inputGroupSelect01">
+                        <option value="" selected>Choose...</option>
+                        <% tbProject.forEach((item)=> { %>
+                        <option value="<%= item.id %>"><%= item.name %></option>
+                        <% }); %>
+                      </select>
+                      <% } %>
+                      <small class="d-block text-body-secondary">Provide various travel experience services.</small>
+                    </span>
+                  </label>
+                  <label class="list-group-item d-flex gap-2">
+                    <input class="form-check-input flex-shrink-0" type="checkbox" name="D<%= iDay %>_ck_ticket" value="Y" />
+                    <span style="width: 100%">
+                      Ticket Booking Service
+                      <!-- prettier-ignore -->
+                      <% for (var i=0; i < loop; i++) { %>
+                      <select class="form-select" name="D<%= iDay %>_dd_ticket" id="inputGroupSelect01">
+                        <option value="" selected>Choose...</option>
+                        <% tbTicket.forEach((item)=> { %>
+                        <option value="<%= item.id %>"><%= item.name %></option>
+                        <% }); %>
+                      </select>
+                      <% } %>
+                      <small class="d-block text-body-secondary">Provide various ticket booking services.</small>
+                    </span>
+                  </label>
+                  <label class="list-group-item d-flex gap-2">
+                    <span style="width: 100%">
+                      <div class="form-floating">
+                        <input type="number" class="form-control" name="D<%= iDay %>_num_other" id="D<%= iDay %>_trave_dates" placeholder="" maxlength="10" value="0" />
+                        <label for="D<%= iDay %>_trave_dates">Additional Service Charges</label>
+                      </div>
+                      <small class="d-block text-body-secondary">Overtime service and additional service.</small>
+                    </span>
+                  </label>
+                </div>
+                <hr class="my-4" />
+              </div>
+            </div>
+            <% } %>
+          </div>
 
-        <p class="mt-5 mb-3 text-body-secondary">&copy; 2024</p>
+          <div class="row justify-content-center">
+            <div class="form-signin col-10 col-md-8 col-xl-4">
+              <div id="DIV_SUBMIT" style="display: none">
+                <button class="btn btn-primary w-100 py-2" type="submit">Submit</button>
+              </div>
+
+              <p class="mt-5 mb-3 text-body-secondary">&copy; 2024</p>
+            </div>
+          </div>
+        </div>
       </form>
     </main>
   </body>
