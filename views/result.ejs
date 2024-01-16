@@ -164,28 +164,28 @@
           </tr>
           <% if (objResult.experiences_qty.length > 0) { %>
           <tr>
-            <td>Tourist Experiences:</td>
+            <td style="font-weight:bold;">Tourist Experiences:</td>
             <td></td>
           </tr>
           <% } %>
           <!-- prettier-ignore -->
           <% objResult.experiences_qty.forEach((item)=> { %>
           <tr>
-            <td><%= item.name %></td>
+            <td style="font-style: italic;">・<%= item.name %></td>
             <td><%= item.qty %></td>
           </tr>
           <% }); %>
           <!-- prettier-ignore -->
           <% if (objResult.ticket_qty.length > 0) { %>
           <tr>
-            <td>Ticket Booking Service:</td>
+            <td style="font-weight:bold;">Ticket Booking Service:</td>
             <td></td>
           </tr>
           <% } %>
           <!-- prettier-ignore -->
           <% objResult.ticket_qty.forEach((item)=> { %>
           <tr>
-            <td><%= item.name %></td>
+            <td style="font-style: italic;">・<%= item.name %></td>
             <td><%= item.qty %></td>
           </tr>
           <% }); %>
