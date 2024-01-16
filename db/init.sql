@@ -23,7 +23,7 @@ insert into m_car values('1', '45', '95000');
 
 create table m_food(price_adult, price_child);
 DELETE FROM m_food;
-insert into m_food values('3000', '3000');
+insert into m_food values('3000', '2000');
 
 create table m_project(id, name, price_adult, price_child);
 DELETE FROM m_project;
@@ -35,13 +35,13 @@ insert into m_project values('5', 'Sword Marking', '65000', '65000');
 
 create table m_ticket(id, name, price_adult, price_child);
 DELETE FROM m_ticket;
-insert into m_ticket values('1', 'USJ or Disney', '11000', '11000');
+insert into m_ticket values('1', 'USJ or Disney', '11000', '6000');
 insert into m_ticket values('2', 'Temple', '500', '500');
-insert into m_ticket values('3', 'Bullet Train(Tokyo-Osaka)', '16000', '16000');
-insert into m_ticket values('4', 'Bullet Train(Tokyo-Nagoya)', '12000', '12000');
-insert into m_ticket values('5', 'Owakudani valley & Hakone Rope Way', '4000', '4000');
-insert into m_ticket values('6', 'Pirate ship cruise on Lake Ashi', '3000', '3000');
-insert into m_ticket values('7', 'Team Lab Planet Tokyo', '5000', '5000');
+insert into m_ticket values('3', 'Bullet Train(Tokyo-Osaka)', '16000', '8000');
+insert into m_ticket values('4', 'Bullet Train(Tokyo-Nagoya)', '12000', '6000');
+insert into m_ticket values('5', 'Owakudani valley & Hakone Rope Way', '4000', '2000');
+insert into m_ticket values('6', 'Pirate ship cruise on Lake Ashi', '3000', '2000');
+insert into m_ticket values('7', 'Team Lab Planet Tokyo', '5000', '2000');
 insert into m_ticket values('8', 'Sky Tree', '3500', '3500');
 
 create table t_log(id, time, ip, num_adults, num_children, travel_dates, amount);

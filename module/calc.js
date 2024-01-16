@@ -83,7 +83,7 @@ module.exports = async function calc(objReq) {
         //订餐服务Dinner
         if (objReq.days[i].ck_dinner == "Y") {
             total_day += parseFloat(tbFood[0].price_adult) * objReq.num_adults
-                + parseFloat(tbFood[0].price_adult) * objReq.num_children;
+                + parseFloat(tbFood[0].price_child) * objReq.num_children;
             objResult.dinner_qty += intTotal_people;
         }
 
@@ -97,7 +97,7 @@ module.exports = async function calc(objReq) {
         if (objReq.days[i].ck_hotel == "Y") {
             tbHotel = await db.getHotel(objReq.days[i].br_hotel);
             total_day += parseFloat(tbHotel[0].price_adult) * objReq.num_adults
-                + parseFloat(tbHotel[0].price_adult) * objReq.num_children;
+                + parseFloat(tbHotel[0].price_child) * objReq.num_children;
             objResult.hotel_qty += intTotal_people;
         }
 
@@ -107,7 +107,7 @@ module.exports = async function calc(objReq) {
                 if (objReq.days[i].dd_experiences[j] != "") {
                     tbProject = await db.getProject(objReq.days[i].dd_experiences[j]);
                     total_day += parseFloat(tbProject[0].price_adult) * objReq.num_adults
-                        + parseFloat(tbProject[0].price_adult) * objReq.num_children;
+                        + parseFloat(tbProject[0].price_child) * objReq.num_children;
                     objResult.experiences_qty.push({ name: tbProject[0].name, qty: intTotal_people });
                 }
             }
@@ -119,7 +119,7 @@ module.exports = async function calc(objReq) {
                 if (objReq.days[i].dd_ticket[j] != "") {
                     tbTicket = await db.getTicket(objReq.days[i].dd_ticket[j]);
                     total_day += parseFloat(tbTicket[0].price_adult) * 1.1 * objReq.num_adults
-                        + parseFloat(tbTicket[0].price_adult) * 1.1 * objReq.num_children;
+                        + parseFloat(tbTicket[0].price_child) * 1.1 * objReq.num_children;
                     objResult.ticket_qty.push({ name: tbTicket[0].name, qty: intTotal_people });
                 }
             }
