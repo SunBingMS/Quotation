@@ -103,7 +103,7 @@ module.exports = async function calc(objReq) {
 
         //体验项目
         if (objReq.days[i].ck_experiences == "Y") {
-            for (let j = 0; j < 3; j++) {
+            for (let j = 0; j < 5; j++) {
                 if (objReq.days[i].dd_experiences[j] != "") {
                     tbProject = await db.getProject(objReq.days[i].dd_experiences[j]);
                     total_day += parseFloat(tbProject[0].price_adult) * objReq.num_adults
@@ -115,7 +115,7 @@ module.exports = async function calc(objReq) {
 
         //订票服务 实际票价+实际票价10%
         if (objReq.days[i].ck_ticket == "Y") {
-            for (let j = 0; j < 3; j++) {
+            for (let j = 0; j < 5; j++) {
                 if (objReq.days[i].dd_ticket[j] != "") {
                     tbTicket = await db.getTicket(objReq.days[i].dd_ticket[j]);
                     total_day += parseFloat(tbTicket[0].price_adult) * 1.1 * objReq.num_adults

@@ -20,7 +20,7 @@ router.get('/index', isAuthenticated, async function (req, res, next) {
   };
   await db.insertLoginLog(strIP, objReq, '0');
 
-  res.render('index', { loop: 3, tbProject, tbTicket });
+  res.render('index', { loop: 5, tbProject, tbTicket });
 });
 
 router.get('/log', async function (req, res, next) {
