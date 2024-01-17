@@ -59,7 +59,7 @@ module.exports = {
     // We use a try catch block in case of db errors
     try {
       if (id) {
-        return await db.all("SELECT name, price_adult, price_child FROM m_project WHERE id = ?", id);
+        return await db.all("SELECT name, price_adult, price_child FROM m_project WHERE id = ? ORDER BY CAST(id AS integer)", id);
       }
       else {
         return await db.all("SELECT id, name FROM m_project");
@@ -74,7 +74,7 @@ module.exports = {
     // We use a try catch block in case of db errors
     try {
       if (id) {
-        return await db.all("SELECT name, price_adult, price_child FROM m_ticket WHERE id = ?", id);
+        return await db.all("SELECT name, price_adult, price_child FROM m_ticket WHERE id = ? ORDER BY CAST(id AS integer)", id);
       }
       else {
         return await db.all("SELECT id, name FROM m_ticket");

@@ -43,6 +43,10 @@ insert into m_ticket values('5', 'Owakudani valley & Hakone Rope Way', '4000', '
 insert into m_ticket values('6', 'Pirate ship cruise on Lake Ashi', '3000', '2000');
 insert into m_ticket values('7', 'Team Lab Planet Tokyo', '5000', '2000');
 insert into m_ticket values('8', 'Sky Tree', '3500', '3500');
+insert into m_ticket values('9', 'Cruise ride in Dotobori River', '1300', '500');
+insert into m_ticket values('10', 'Hello Kitty Smile Museum', '2500', '1000');
+insert into m_ticket values('11', 'Aquaignis-Awaji Onsen', '3500', '2000');
+insert into m_ticket values('12', 'Osaka Castle', '800', '800');
 
 create table t_log(id, time, ip, num_adults, num_children, travel_dates, amount);
 create table t_log_detail(id, time, num_day, ck_guide, ck_lunch, ck_dinner, ck_car, br_car, ck_hotel, br_area, br_hotel, ck_experiences, dd_experiences, ck_ticket, dd_ticket, num_other);
