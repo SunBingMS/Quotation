@@ -1,6 +1,6 @@
 create table m_hotel(level, price_adult, price_child);
 DELETE FROM m_hotel;
-insert into m_hotel values('3', '12000', '12000');
+insert into m_hotel values('3', '10000', '10000');
 insert into m_hotel values('4', '18000', '18000');
 insert into m_hotel values('5', '55000', '55000');
 
@@ -39,14 +39,19 @@ insert into m_ticket values('1', 'USJ or Disney', '11000', '6000');
 insert into m_ticket values('2', 'Temple', '500', '500');
 insert into m_ticket values('3', 'Bullet Train(Tokyo-Osaka)', '16000', '8000');
 insert into m_ticket values('4', 'Bullet Train(Tokyo-Nagoya)', '12000', '6000');
-insert into m_ticket values('5', 'Owakudani valley & Hakone Rope Way', '4000', '2000');
-insert into m_ticket values('6', 'Pirate ship cruise on Lake Ashi', '3000', '2000');
-insert into m_ticket values('7', 'Team Lab Planet Tokyo', '5000', '2000');
-insert into m_ticket values('8', 'Sky Tree', '3500', '3500');
-insert into m_ticket values('9', 'Cruise ride in Dotobori River', '1300', '500');
-insert into m_ticket values('10', 'Hello Kitty Smile Museum', '2500', '1000');
-insert into m_ticket values('11', 'Aquaignis-Awaji Onsen', '3500', '2000');
-insert into m_ticket values('12', 'Osaka Castle', '800', '800');
+insert into m_ticket values('5', 'Bullet Train(Tokyo-Hakata)', '24000', '12000');
+insert into m_ticket values('6', 'Bullet Train(Osaka-Nagoya)', '7000', '3500');
+insert into m_ticket values('7', 'Bullet Train(Osaka-Hakata)', '17000', '8500');
+insert into m_ticket values('8', 'Airplane(Tokyo-Sapporo)', '40000', '20000');
+insert into m_ticket values('9', 'Airplane(Osaka-Sapporo)', '52000', '26000');
+insert into m_ticket values('10', 'Owakudani valley & Hakone Rope Way', '4000', '2000');
+insert into m_ticket values('11', 'Pirate ship cruise on Lake Ashi', '3000', '2000');
+insert into m_ticket values('12', 'Team Lab Planet Tokyo', '5000', '2000');
+insert into m_ticket values('13', 'Sky Tree', '3500', '3500');
+insert into m_ticket values('14', 'Cruise ride in Dotobori River', '1300', '500');
+insert into m_ticket values('15', 'Hello Kitty Smile Museum', '2500', '1000');
+insert into m_ticket values('16', 'Aquaignis-Awaji Onsen', '3500', '2000');
+insert into m_ticket values('17', 'Osaka Castle', '800', '800');
 
 create table t_log(id, time, ip, num_adults, num_children, travel_dates, amount);
 create table t_log_detail(id, time, num_day, ck_guide, ck_lunch, ck_dinner, ck_car, br_car, ck_hotel, br_area, br_hotel, ck_experiences, dd_experiences, ck_ticket, dd_ticket, num_other);

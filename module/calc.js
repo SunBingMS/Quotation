@@ -96,8 +96,14 @@ module.exports = async function calc(objReq) {
         //酒店费用
         if (objReq.days[i].ck_hotel == "Y") {
             tbHotel = await db.getHotel(objReq.days[i].br_hotel);
-            total_day += parseFloat(tbHotel[0].price_adult) * objReq.num_adults
+            if (objReq.travel_dates >= 5 || intTotal_people >= 10) {
+                total_day += parseFloat(tbHotel[0].price_adult) * objReq.num_adults * 0.8
+                + parseFloat(tbHotel[0].price_child) * objReq.num_children * 0.8;
+            }
+            else {
+                total_day += parseFloat(tbHotel[0].price_adult) * objReq.num_adults
                 + parseFloat(tbHotel[0].price_child) * objReq.num_children;
+            }
             objResult.hotel_qty += intTotal_people;
         }
 
@@ -145,8 +151,8 @@ module.exports = async function calc(objReq) {
     objResult.total_amount += 2000 * objReq.num_adults + 2000 * objReq.num_children;
     objResult.tip_qty = parseInt(objReq.num_adults) + parseInt(objReq.num_children);
 
-    //公司运营成本5% + 基础信息技术服务费用 + 基础设备添置
-    objResult.total_amount = Math.round(objResult.total_amount * 1.05 + 20000 + 10000);
+    //公司运营成本20% + 基础信息技术服务费用 + 基础设备添置
+    objResult.total_amount = Math.round(objResult.total_amount * 1.2 + 20000 + 10000);
 
     //勾选项目种类低于3的话，不提供报价
     if (objResult.guide_qty > 0) intCheckBoxCount += 1;
